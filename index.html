@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Диагностика запуска — где теряются деньги</title>
+  <meta name="description" content="За несколько минут посчитайте математику запуска и увидьте, на каком этапе теряются деньги." />
+  <style>
+    :root{--blue:#1647D8;--pink:#F22998;--milk:#fffaf7;--ink:#121212;--muted:#6f6f76;--card:#ffffff;--line:#e8e8ee;--good:#157f4f;--warn:#b56100}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fff 0%,var(--milk) 100%);color:var(--ink)}
+    .wrap{width:min(760px,100%);margin:0 auto;padding:24px 16px 56px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:28px}.brand{font-weight:800}.step{font-size:13px;color:var(--muted)}
+    .progress{height:7px;background:#ececf2;border-radius:999px;overflow:hidden;margin-bottom:28px}.progress>i{display:block;height:100%;width:14%;background:linear-gradient(90deg,var(--blue),var(--pink));transition:.25s}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(20px,5vw,38px);box-shadow:0 12px 42px rgba(15,15,20,.06)}
+    h1,h2{letter-spacing:-.035em;margin:0 0 14px;line-height:1.04}h1{font-size:clamp(34px,7vw,58px)}h2{font-size:clamp(26px,5vw,38px)}p{font-size:17px;line-height:1.55;margin:0 0 18px}.lead{font-size:19px;color:#303039}.muted{color:var(--muted);font-size:14px}.accent{background:linear-gradient(90deg,var(--blue),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .choices{display:grid;gap:12px;margin-top:24px}.choice,.btn{width:100%;border:0;border-radius:16px;padding:17px 18px;font-size:16px;font-weight:750;cursor:pointer;transition:.15s}.choice{background:#f5f6fb;color:var(--ink);text-align:left;border:1px solid #ececf3}.choice:hover{transform:translateY(-1px);border-color:#cfd3e5}.btn{background:var(--ink);color:#fff;margin-top:18px}.btn.secondary{background:#f1f3fa;color:var(--ink)}.btn.link{background:linear-gradient(90deg,var(--blue),var(--pink));color:#fff}
+    .field{margin:17px 0}.field label{display:block;font-weight:700;margin-bottom:8px}.field input{width:100%;padding:15px 14px;border:1px solid #dcdde5;border-radius:14px;font-size:16px;background:#fff;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(22,71,216,.1)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hidden{display:none!important}.error{color:#b42318;font-size:14px;margin-top:10px}.result{border-radius:18px;padding:20px;background:#f7f7fb;margin:18px 0}.result strong{font-size:28px;display:block;margin-bottom:5px}.pill{display:inline-block;padding:8px 11px;border-radius:999px;font-size:13px;font-weight:800;background:#f0ecff;color:#4e2d9d;margin-bottom:16px}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.metric{padding:16px;border:1px solid var(--line);border-radius:15px;background:#fff}.metric b{font-size:23px;display:block}.metric span{font-size:13px;color:var(--muted)}.note{border-left:4px solid var(--pink);padding:14px 16px;background:#fff5fb;border-radius:0 14px 14px 0;margin:20px 0}.consent{display:flex;gap:10px;align-items:flex-start;margin-top:15px;font-size:13px;color:var(--muted)}.consent input{margin-top:3px}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
+    @media(max-width:560px){.row,.metric-grid{grid-template-columns:1fr}.card{border-radius:20px}.wrap{padding-top:14px}.top{margin-bottom:18px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top"><div class="brand">ДНК запуска</div><div class="step" id="stepLabel">Шаг 1 из 7</div></div>
+    <div class="progress"><i id="bar"></i></div>
+    <section class="card">
+      <div id="s1">
+        <div class="pill">Бесплатная диагностика</div>
+        <h1>Где твой запуск <span class="accent">теряет деньги?</span></h1>
+        <p class="lead">Введи несколько цифр и за пару минут увидишь, на каком этапе запуска у тебя самая большая утечка.</p>
+        <p class="muted">Без лекции на 40 страниц. Сначала цифры. Потом вывод.</p>
+        <div class="choices">
+          <button class="choice" data-mode="past">Я уже делал(а) запуски → разберём последний</button>
+          <button class="choice" data-mode="plan">Я только планирую запуск → посчитаем цель</button>
+        </div>
+      </div>
+
+      <div id="s2" class="hidden">
+        <h2>Куда прислать твой результат?</h2>
+        <p>Заполни контакты. После этого откроется сама диагностика.</p>
+        <div class="field"><label>Имя</label><input id="name" autocomplete="name" placeholder="Например, Аня"></div>
+        <div class="field"><label>Telegram</label><input id="telegram" placeholder="@username"></div>
+        <div class="field"><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="name@example.com"></div>
+        <div class="field"><label>Телефон <span class="muted">(необязательно)</span></label><input id="phone" type="tel" autocomplete="tel" placeholder="+7 ..."></div>
+        <label class="consent"><input id="consent" type="checkbox"> <span>Согласен(на) на обработку указанных данных для получения результата диагностики и материалов по теме запусков.</span></label>
+        <div id="contactError" class="error hidden"></div>
+        <button class="btn" id="toCalc">Получить расчёт →</button>
+      </div>
+
+      <div id="s3past" class="hidden">
+        <h2>Давай разберём последний запуск</h2>
+        <p>Нужны только фактические цифры. Если чего-то не знаешь точно — укажи приблизительно.</p>
+        <div class="row">
+          <div class="field"><label>Регистраций</label><input id="registrations" type="number" min="0" inputmode="numeric" placeholder="200"></div>
+          <div class="field"><label>Пришли на эфир</label><input id="attended" type="number" min="0" inputmode="numeric" placeholder="46"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Заявок / диалогов после эфира</label><input id="applications" type="number" min="0" inputmode="numeric" placeholder="15"></div>
+          <div class="field"><label>Продаж</label><input id="sales" type="number" min="0" inputmode="numeric" placeholder="3"></div>
+        </div>
+        <div class="field"><label>Средний чек, ₽</label><input id="price" type="number" min="0" inputmode="numeric" placeholder="100000"></div>
+        <div id="pastError" class="error hidden"></div>
+        <button class="btn" id="calcPast">Показать, где течёт →</button>
+      </div>
+
+      <div id="s3plan" class="hidden">
+        <h2>Посчитаем цель будущего запуска</h2>
+        <p>Здесь не будем выдавать тебе «магические нормы». Сначала увидим базовую математику.</p>
+        <div class="field"><label>Сколько хочешь сделать выручки, ₽</label><input id="targetRevenue" type="number" min="1" inputmode="numeric" placeholder="1000000"></div>
+        <div class="field"><label>Стоимость продукта, ₽</label><input id="planPrice" type="number" min="1" inputmode="numeric" placeholder="100000"></div>
+        <div id="planError" class="error hidden"></div>
+        <button class="btn" id="calcPlan">Посчитать →</button>
+      </div>
+
+      <div id="s4" class="hidden">
+        <div class="pill">Твой результат</div>
+        <h2 id="resultTitle"></h2>
+        <div id="resultBody"></div>
+        <button class="btn" id="toWarm">Что это значит для моего запуска? →</button>
+      </div>
+
+      <div id="s5" class="hidden">
+        <h2>Вот где обычно начинается дорогая ошибка</h2>
+        <p id="warmText1"></p>
+        <div class="note"><b>Важно:</b> эта диагностика показывает <b>где</b> у тебя проблема. Она специально не даёт пошаговую механику <b>как</b> её исправлять.</div>
+        <p>Потому что запуск — это цепочка. Если чинить один кусок в отрыве от продукта, трафика, доходимости и продажи, можно просто начать терять деньги в другом месте.</p>
+        <button class="btn" id="toIntent">Понял(а). Что дальше? →</button>
+      </div>
+
+      <div id="s6" class="hidden">
+        <h2>Что тебе сейчас нужнее всего?</h2>
+        <p>Выбери один вариант — я покажу следующий шаг именно под твою ситуацию.</p>
+        <div class="choices">
+          <button class="choice intent" data-intent="learn">Хочу научиться делать такие запуски себе и клиентам</button>
+          <button class="choice intent" data-intent="diagnostic">Хочу разобрать именно мой текущий запуск</button>
+          <button class="choice intent" data-intent="watch">Хочу сначала посмотреть, как это работает вживую</button>
+        </div>
+      </div>
+
+      <div id="s7" class="hidden">
+        <div class="pill">Следующий шаг</div>
+        <h2 id="finalTitle"></h2>
+        <p id="finalText"></p>
+        <a id="finalLink" class="btn link" href="#">Перейти →</a>
+        <button class="btn secondary" id="restart">Пройти ещё раз</button>
+        <p class="muted" style="margin-top:16px">Ссылка на следующий шаг пока тестовая — перед запуском подключим нужный Telegram / эфир / заявку.</p>
+      </div>
+    </section>
+    <div class="footer">Диагностика запуска • Галина Коновалова</div>
+  </main>
+
+  <script>
+    const state={mode:null,contact:{},metrics:{},diagnosis:null,intent:null};
+    const $=id=>document.getElementById(id);
+    const screens=['s1','s2','s3past','s3plan','s4','s5','s6','s7'];
+    function show(id,step){screens.forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden');$('stepLabel').textContent=`Шаг ${step} из 7`;$('bar').style.width=`${Math.max(14,step/7*100)}%`;window.scrollTo({top:0,behavior:'smooth'});}
+    function money(v){return new Intl.NumberFormat('ru-RU').format(Math.round(v))+' ₽'}
+    function pct(a,b){return b>0?Math.round(a/b*100):0}
+    document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;show('s2',2)}));
+    $('toCalc').addEventListener('click',()=>{
+      const name=$('name').value.trim(),tg=$('telegram').value.trim(),email=$('email').value.trim(),phone=$('phone').value.trim();
+      const err=$('contactError'); err.classList.add('hidden');
+      if(!name||!tg||!email||!$('consent').checked){err.textContent='Заполни имя, Telegram, email и отметь согласие.';err.classList.remove('hidden');return}
+      if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent='Проверь email — кажется, в нём ошибка.';err.classList.remove('hidden');return}
+      state.contact={name,telegram:tg,email,phone};
+      show(state.mode==='past'?'s3past':'s3plan',3);
+    });
+    $('calcPast').addEventListener('click',()=>{
+      const r=+$('registrations').value,a=+$('attended').value,ap=+$('applications').value,s=+$('sales').value,p=+$('price').value;
+      const err=$('pastError');err.classList.add('hidden');
+      if(r<=0||p<=0||a<0||ap<0||s<0||a>r||ap>a||s>ap){err.textContent='Проверь цифры: регистраций должно быть не меньше пришедших, пришедших — не меньше заявок, заявок — не меньше продаж.';err.classList.remove('hidden');return}
+      const attendance=pct(a,r),appRate=pct(ap,a),closeRate=pct(s,ap),revenue=s*p;
+      let diagnosis='Доходимость';
+      if(attendance>=35 && appRate<20) diagnosis='Переход из эфира в заявку';
+      else if(attendance>=35 && appRate>=20 && closeRate<20) diagnosis='Закрытие заявок в продажу';
+      else if(attendance>=35 && appRate>=20 && closeRate>=20) diagnosis='Масштабирование верхней части воронки';
+      state.metrics={r,a,ap,s,p,attendance,appRate,closeRate,revenue};state.diagnosis=diagnosis;
+      $('resultTitle').textContent=`Главная точка внимания: ${diagnosis}`;
+      $('resultBody').innerHTML=`<div class="metric-grid"><div class="metric"><b>${attendance}%</b><span>дошли из регистрации на эфир</span></div><div class="metric"><b>${appRate}%</b><span>перешли из эфира в заявку</span></div><div class="metric"><b>${closeRate}%</b><span>заявок закрылись в оплату</span></div><div class="metric"><b>${money(revenue)}</b><span>фактическая выручка</span></div></div><div class="result"><strong>${diagnosis}</strong><span>Именно этот участок в твоих текущих цифрах выглядит самым уязвимым. Это не «рыночный приговор», а диагностический ориентир по твоей воронке.</span></div>`;
+      show('s4',4);
+    });
+    $('calcPlan').addEventListener('click',()=>{
+      const t=+$('targetRevenue').value,p=+$('planPrice').value;const err=$('planError');err.classList.add('hidden');
+      if(t<=0||p<=0){err.textContent='Укажи желаемую выручку и стоимость продукта.';err.classList.remove('hidden');return}
+      const need=Math.ceil(t/p),actual=need*p;state.metrics={target:t,p,need,actual};state.diagnosis='Математика всей воронки';
+      $('resultTitle').textContent=`Тебе нужно минимум ${need} продаж`;
+      $('resultBody').innerHTML=`<div class="metric-grid"><div class="metric"><b>${money(t)}</b><span>твоя цель</span></div><div class="metric"><b>${money(p)}</b><span>чек продукта</span></div><div class="metric"><b>${need}</b><span>минимум продаж</span></div><div class="metric"><b>${money(actual)}</b><span>выручка при ${need} продажах</span></div></div><div class="result"><strong>Но это только последняя цифра</strong><span>Сколько для этих ${need} продаж понадобится регистраций, живых участников и заявок, зависит от нескольких конверсий запуска. Именно там обычно и спрятана настоящая математика.</span></div>`;
+      show('s4',4);
+    });
+    $('toWarm').addEventListener('click',()=>{
+      $('warmText1').textContent=state.mode==='past'?`Сейчас у тебя слабее всего выглядит участок «${state.diagnosis}». Самая частая реакция — срочно налить больше трафика. Но если внутри воронки уже есть утечка, больше трафика просто делает эту утечку дороже.`:`Ты уже знаешь, сколько продаж нужно для своей цели. Но запуск не начинается с этой цифры. Между контентом и оплатой есть несколько переходов — и каждый может резко изменить необходимый объём аудитории.`;
+      show('s5',5);
+    });
+    $('toIntent').addEventListener('click',()=>show('s6',6));
+    document.querySelectorAll('.intent').forEach(b=>b.addEventListener('click',()=>{
+      state.intent=b.dataset.intent;
+      const variants={
+        learn:{title:'Тебе нужен навык собирать запуск целиком',text:'Следующий шаг — посмотреть систему, по которой маркетолог или продюсер может вести запуск от оффера и набора до доходимости, продаж и дожима.',label:'Узнать о программе'},
+        diagnostic:{title:'Тебе нужен разбор именно твоей воронки',text:'Следующий шаг — оставить заявку на диагностику, чтобы посмотреть цифры глубже и понять, какой участок чинить первым.',label:'Оставить заявку на диагностику'},
+        watch:{title:'Сначала посмотри механику вживую',text:'Следующий шаг — прийти на живой эфир, где я покажу на цифрах собственного запуска, сколько людей зарегистрировалось, сколько дошло и что происходило дальше.',label:'Прийти на эфир'}
+      };
+      const v=variants[state.intent];$('finalTitle').textContent=v.title;$('finalText').textContent=v.text;$('finalLink').textContent=v.label+' →';$('finalLink').href='#';
+      show('s7',7);
+    }));
+    $('restart').addEventListener('click',()=>location.reload());
+  </script>
+</body>
+</html>

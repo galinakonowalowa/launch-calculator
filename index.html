@@ -1,167 +1,35 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Диагностика запуска — где теряются деньги</title>
-  <meta name="description" content="За несколько минут посчитайте математику запуска и увидьте, на каком этапе теряются деньги." />
-  <style>
-    :root{--blue:#1647D8;--pink:#F22998;--milk:#fffaf7;--ink:#121212;--muted:#6f6f76;--card:#ffffff;--line:#e8e8ee;--good:#157f4f;--warn:#b56100}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fff 0%,var(--milk) 100%);color:var(--ink)}
-    .wrap{width:min(760px,100%);margin:0 auto;padding:24px 16px 56px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:28px}.brand{font-weight:800}.step{font-size:13px;color:var(--muted)}
-    .progress{height:7px;background:#ececf2;border-radius:999px;overflow:hidden;margin-bottom:28px}.progress>i{display:block;height:100%;width:14%;background:linear-gradient(90deg,var(--blue),var(--pink));transition:.25s}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(20px,5vw,38px);box-shadow:0 12px 42px rgba(15,15,20,.06)}
-    h1,h2{letter-spacing:-.035em;margin:0 0 14px;line-height:1.04}h1{font-size:clamp(34px,7vw,58px)}h2{font-size:clamp(26px,5vw,38px)}p{font-size:17px;line-height:1.55;margin:0 0 18px}.lead{font-size:19px;color:#303039}.muted{color:var(--muted);font-size:14px}.accent{background:linear-gradient(90deg,var(--blue),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .choices{display:grid;gap:12px;margin-top:24px}.choice,.btn{width:100%;border:0;border-radius:16px;padding:17px 18px;font-size:16px;font-weight:750;cursor:pointer;transition:.15s}.choice{background:#f5f6fb;color:var(--ink);text-align:left;border:1px solid #ececf3}.choice:hover{transform:translateY(-1px);border-color:#cfd3e5}.btn{background:var(--ink);color:#fff;margin-top:18px}.btn.secondary{background:#f1f3fa;color:var(--ink)}.btn.link{background:linear-gradient(90deg,var(--blue),var(--pink));color:#fff}
-    .field{margin:17px 0}.field label{display:block;font-weight:700;margin-bottom:8px}.field input{width:100%;padding:15px 14px;border:1px solid #dcdde5;border-radius:14px;font-size:16px;background:#fff;outline:none}.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(22,71,216,.1)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hidden{display:none!important}.error{color:#b42318;font-size:14px;margin-top:10px}.result{border-radius:18px;padding:20px;background:#f7f7fb;margin:18px 0}.result strong{font-size:28px;display:block;margin-bottom:5px}.pill{display:inline-block;padding:8px 11px;border-radius:999px;font-size:13px;font-weight:800;background:#f0ecff;color:#4e2d9d;margin-bottom:16px}.metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.metric{padding:16px;border:1px solid var(--line);border-radius:15px;background:#fff}.metric b{font-size:23px;display:block}.metric span{font-size:13px;color:var(--muted)}.note{border-left:4px solid var(--pink);padding:14px 16px;background:#fff5fb;border-radius:0 14px 14px 0;margin:20px 0}.consent{display:flex;gap:10px;align-items:flex-start;margin-top:15px;font-size:13px;color:var(--muted)}.consent input{margin-top:3px}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
-    @media(max-width:560px){.row,.metric-grid{grid-template-columns:1fr}.card{border-radius:20px}.wrap{padding-top:14px}.top{margin-bottom:18px}}
-  </style>
-</head>
-<body>
-  <main class="wrap">
-    <div class="top"><div class="brand">ДНК запуска</div><div class="step" id="stepLabel">Шаг 1 из 7</div></div>
-    <div class="progress"><i id="bar"></i></div>
-    <section class="card">
-      <div id="s1">
-        <div class="pill">Бесплатная диагностика</div>
-        <h1>Где твой запуск <span class="accent">теряет деньги?</span></h1>
-        <p class="lead">Введи несколько цифр и за пару минут увидишь, на каком этапе запуска у тебя самая большая утечка.</p>
-        <p class="muted">Без лекции на 40 страниц. Сначала цифры. Потом вывод.</p>
-        <div class="choices">
-          <button class="choice" data-mode="past">Я уже делал(а) запуски → разберём последний</button>
-          <button class="choice" data-mode="plan">Я только планирую запуск → посчитаем цель</button>
-        </div>
-      </div>
-
-      <div id="s2" class="hidden">
-        <h2>Куда прислать твой результат?</h2>
-        <p>Заполни контакты. После этого откроется сама диагностика.</p>
-        <div class="field"><label>Имя</label><input id="name" autocomplete="name" placeholder="Например, Аня"></div>
-        <div class="field"><label>Telegram</label><input id="telegram" placeholder="@username"></div>
-        <div class="field"><label>Email</label><input id="email" type="email" autocomplete="email" placeholder="name@example.com"></div>
-        <div class="field"><label>Телефон <span class="muted">(необязательно)</span></label><input id="phone" type="tel" autocomplete="tel" placeholder="+7 ..."></div>
-        <label class="consent"><input id="consent" type="checkbox"> <span>Согласен(на) на обработку указанных данных для получения результата диагностики и материалов по теме запусков.</span></label>
-        <div id="contactError" class="error hidden"></div>
-        <button class="btn" id="toCalc">Получить расчёт →</button>
-      </div>
-
-      <div id="s3past" class="hidden">
-        <h2>Давай разберём последний запуск</h2>
-        <p>Нужны только фактические цифры. Если чего-то не знаешь точно — укажи приблизительно.</p>
-        <div class="row">
-          <div class="field"><label>Регистраций</label><input id="registrations" type="number" min="0" inputmode="numeric" placeholder="200"></div>
-          <div class="field"><label>Пришли на эфир</label><input id="attended" type="number" min="0" inputmode="numeric" placeholder="46"></div>
-        </div>
-        <div class="row">
-          <div class="field"><label>Заявок / диалогов после эфира</label><input id="applications" type="number" min="0" inputmode="numeric" placeholder="15"></div>
-          <div class="field"><label>Продаж</label><input id="sales" type="number" min="0" inputmode="numeric" placeholder="3"></div>
-        </div>
-        <div class="field"><label>Средний чек, ₽</label><input id="price" type="number" min="0" inputmode="numeric" placeholder="100000"></div>
-        <div id="pastError" class="error hidden"></div>
-        <button class="btn" id="calcPast">Показать, где течёт →</button>
-      </div>
-
-      <div id="s3plan" class="hidden">
-        <h2>Посчитаем цель будущего запуска</h2>
-        <p>Здесь не будем выдавать тебе «магические нормы». Сначала увидим базовую математику.</p>
-        <div class="field"><label>Сколько хочешь сделать выручки, ₽</label><input id="targetRevenue" type="number" min="1" inputmode="numeric" placeholder="1000000"></div>
-        <div class="field"><label>Стоимость продукта, ₽</label><input id="planPrice" type="number" min="1" inputmode="numeric" placeholder="100000"></div>
-        <div id="planError" class="error hidden"></div>
-        <button class="btn" id="calcPlan">Посчитать →</button>
-      </div>
-
-      <div id="s4" class="hidden">
-        <div class="pill">Твой результат</div>
-        <h2 id="resultTitle"></h2>
-        <div id="resultBody"></div>
-        <button class="btn" id="toWarm">Что это значит для моего запуска? →</button>
-      </div>
-
-      <div id="s5" class="hidden">
-        <h2>Вот где обычно начинается дорогая ошибка</h2>
-        <p id="warmText1"></p>
-        <div class="note"><b>Важно:</b> эта диагностика показывает <b>где</b> у тебя проблема. Она специально не даёт пошаговую механику <b>как</b> её исправлять.</div>
-        <p>Потому что запуск — это цепочка. Если чинить один кусок в отрыве от продукта, трафика, доходимости и продажи, можно просто начать терять деньги в другом месте.</p>
-        <button class="btn" id="toIntent">Понял(а). Что дальше? →</button>
-      </div>
-
-      <div id="s6" class="hidden">
-        <h2>Что тебе сейчас нужнее всего?</h2>
-        <p>Выбери один вариант — я покажу следующий шаг именно под твою ситуацию.</p>
-        <div class="choices">
-          <button class="choice intent" data-intent="learn">Хочу научиться делать такие запуски себе и клиентам</button>
-          <button class="choice intent" data-intent="diagnostic">Хочу разобрать именно мой текущий запуск</button>
-          <button class="choice intent" data-intent="watch">Хочу сначала посмотреть, как это работает вживую</button>
-        </div>
-      </div>
-
-      <div id="s7" class="hidden">
-        <div class="pill">Следующий шаг</div>
-        <h2 id="finalTitle"></h2>
-        <p id="finalText"></p>
-        <a id="finalLink" class="btn link" href="#">Перейти →</a>
-        <button class="btn secondary" id="restart">Пройти ещё раз</button>
-        <p class="muted" style="margin-top:16px">Ссылка на следующий шаг пока тестовая — перед запуском подключим нужный Telegram / эфир / заявку.</p>
-      </div>
-    </section>
-    <div class="footer">Диагностика запуска • Галина Коновалова</div>
-  </main>
-
-  <script>
-    const state={mode:null,contact:{},metrics:{},diagnosis:null,intent:null};
-    const $=id=>document.getElementById(id);
-    const screens=['s1','s2','s3past','s3plan','s4','s5','s6','s7'];
-    function show(id,step){screens.forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden');$('stepLabel').textContent=`Шаг ${step} из 7`;$('bar').style.width=`${Math.max(14,step/7*100)}%`;window.scrollTo({top:0,behavior:'smooth'});}
-    function money(v){return new Intl.NumberFormat('ru-RU').format(Math.round(v))+' ₽'}
-    function pct(a,b){return b>0?Math.round(a/b*100):0}
-    document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;show('s2',2)}));
-    $('toCalc').addEventListener('click',()=>{
-      const name=$('name').value.trim(),tg=$('telegram').value.trim(),email=$('email').value.trim(),phone=$('phone').value.trim();
-      const err=$('contactError'); err.classList.add('hidden');
-      if(!name||!tg||!email||!$('consent').checked){err.textContent='Заполни имя, Telegram, email и отметь согласие.';err.classList.remove('hidden');return}
-      if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent='Проверь email — кажется, в нём ошибка.';err.classList.remove('hidden');return}
-      state.contact={name,telegram:tg,email,phone};
-      show(state.mode==='past'?'s3past':'s3plan',3);
-    });
-    $('calcPast').addEventListener('click',()=>{
-      const r=+$('registrations').value,a=+$('attended').value,ap=+$('applications').value,s=+$('sales').value,p=+$('price').value;
-      const err=$('pastError');err.classList.add('hidden');
-      if(r<=0||p<=0||a<0||ap<0||s<0||a>r||ap>a||s>ap){err.textContent='Проверь цифры: регистраций должно быть не меньше пришедших, пришедших — не меньше заявок, заявок — не меньше продаж.';err.classList.remove('hidden');return}
-      const attendance=pct(a,r),appRate=pct(ap,a),closeRate=pct(s,ap),revenue=s*p;
-      let diagnosis='Доходимость';
-      if(attendance>=35 && appRate<20) diagnosis='Переход из эфира в заявку';
-      else if(attendance>=35 && appRate>=20 && closeRate<20) diagnosis='Закрытие заявок в продажу';
-      else if(attendance>=35 && appRate>=20 && closeRate>=20) diagnosis='Масштабирование верхней части воронки';
-      state.metrics={r,a,ap,s,p,attendance,appRate,closeRate,revenue};state.diagnosis=diagnosis;
-      $('resultTitle').textContent=`Главная точка внимания: ${diagnosis}`;
-      $('resultBody').innerHTML=`<div class="metric-grid"><div class="metric"><b>${attendance}%</b><span>дошли из регистрации на эфир</span></div><div class="metric"><b>${appRate}%</b><span>перешли из эфира в заявку</span></div><div class="metric"><b>${closeRate}%</b><span>заявок закрылись в оплату</span></div><div class="metric"><b>${money(revenue)}</b><span>фактическая выручка</span></div></div><div class="result"><strong>${diagnosis}</strong><span>Именно этот участок в твоих текущих цифрах выглядит самым уязвимым. Это не «рыночный приговор», а диагностический ориентир по твоей воронке.</span></div>`;
-      show('s4',4);
-    });
-    $('calcPlan').addEventListener('click',()=>{
-      const t=+$('targetRevenue').value,p=+$('planPrice').value;const err=$('planError');err.classList.add('hidden');
-      if(t<=0||p<=0){err.textContent='Укажи желаемую выручку и стоимость продукта.';err.classList.remove('hidden');return}
-      const need=Math.ceil(t/p),actual=need*p;state.metrics={target:t,p,need,actual};state.diagnosis='Математика всей воронки';
-      $('resultTitle').textContent=`Тебе нужно минимум ${need} продаж`;
-      $('resultBody').innerHTML=`<div class="metric-grid"><div class="metric"><b>${money(t)}</b><span>твоя цель</span></div><div class="metric"><b>${money(p)}</b><span>чек продукта</span></div><div class="metric"><b>${need}</b><span>минимум продаж</span></div><div class="metric"><b>${money(actual)}</b><span>выручка при ${need} продажах</span></div></div><div class="result"><strong>Но это только последняя цифра</strong><span>Сколько для этих ${need} продаж понадобится регистраций, живых участников и заявок, зависит от нескольких конверсий запуска. Именно там обычно и спрятана настоящая математика.</span></div>`;
-      show('s4',4);
-    });
-    $('toWarm').addEventListener('click',()=>{
-      $('warmText1').textContent=state.mode==='past'?`Сейчас у тебя слабее всего выглядит участок «${state.diagnosis}». Самая частая реакция — срочно налить больше трафика. Но если внутри воронки уже есть утечка, больше трафика просто делает эту утечку дороже.`:`Ты уже знаешь, сколько продаж нужно для своей цели. Но запуск не начинается с этой цифры. Между контентом и оплатой есть несколько переходов — и каждый может резко изменить необходимый объём аудитории.`;
-      show('s5',5);
-    });
-    $('toIntent').addEventListener('click',()=>show('s6',6));
-    document.querySelectorAll('.intent').forEach(b=>b.addEventListener('click',()=>{
-      state.intent=b.dataset.intent;
-      const variants={
-        learn:{title:'Тебе нужен навык собирать запуск целиком',text:'Следующий шаг — посмотреть систему, по которой маркетолог или продюсер может вести запуск от оффера и набора до доходимости, продаж и дожима.',label:'Узнать о программе'},
-        diagnostic:{title:'Тебе нужен разбор именно твоей воронки',text:'Следующий шаг — оставить заявку на диагностику, чтобы посмотреть цифры глубже и понять, какой участок чинить первым.',label:'Оставить заявку на диагностику'},
-        watch:{title:'Сначала посмотри механику вживую',text:'Следующий шаг — прийти на живой эфир, где я покажу на цифрах собственного запуска, сколько людей зарегистрировалось, сколько дошло и что происходило дальше.',label:'Прийти на эфир'}
-      };
-      const v=variants[state.intent];$('finalTitle').textContent=v.title;$('finalText').textContent=v.text;$('finalLink').textContent=v.label+' →';$('finalLink').href='#';
-      show('s7',7);
-    }));
-    $('restart').addEventListener('click',()=>location.reload());
-  </script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Калькулятор твоего дохода</title><meta name="description" content="Посчитай, сколько тебе реально нужно клиентов и продаж, чтобы выйти на нужную сумму.">
+<style>
+:root{--b:#1647D8;--p:#F22998;--m:#FFF9F5;--i:#111116;--g:#70717B;--l:#E8E8EF}*{box-sizing:border-box}body{margin:0;color:var(--i);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 0,rgba(242,41,152,.1),transparent 24%),radial-gradient(circle at 92% 4%,rgba(22,71,216,.1),transparent 24%),linear-gradient(#fff,var(--m));min-height:100vh}button,input,select{font:inherit}.wrap{width:min(820px,100%);margin:auto;padding:14px 12px 55px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:4px 2px 12px}.brand{font-weight:900}.step,.muted{color:var(--g);font-size:13px}.progress{height:6px;background:#eeeef4;border-radius:99px;overflow:hidden;margin-bottom:16px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--p));transition:.25s}.card{background:#fffffff2;border:1px solid var(--l);border-radius:25px;overflow:hidden;box-shadow:0 18px 55px rgba(20,20,35,.08)}.pad,.section{padding:clamp(22px,5vw,42px)}.section{border-top:1px solid var(--l)}.hidden{display:none!important}.pill{display:inline-block;padding:8px 12px;border-radius:99px;background:#F2EEFF;color:#50309E;font-size:13px;font-weight:850;margin-bottom:17px}h1,h2,h3{letter-spacing:-.045em;line-height:1.03;margin:0}h1{font-size:clamp(38px,8vw,64px)}h2{font-size:clamp(29px,6vw,43px)}h3{font-size:22px}.accent{background:linear-gradient(90deg,var(--b),var(--p));background-clip:text;-webkit-background-clip:text;color:transparent}p{font-size:17px;line-height:1.55;margin:14px 0}.lead{font-size:20px}.points{display:grid;gap:9px;margin:22px 0}.points div{font-weight:700;font-size:15px}.points div:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--p));margin-right:10px}.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:17px;padding:15px 18px;text-decoration:none;font-weight:850;cursor:pointer;text-align:center}.primary{color:#fff;background:linear-gradient(90deg,var(--b),var(--p));margin-top:22px;box-shadow:0 10px 26px rgba(90,50,210,.18)}.dark{color:#fff;background:var(--i);margin-top:20px}.choices{display:grid;gap:10px;margin-top:22px}.choice{width:100%;text-align:left;border:1px solid var(--l);background:#F8F8FB;border-radius:17px;padding:17px 18px;font-weight:780;cursor:pointer;color:var(--i)}.choice:hover{background:#fff;border-color:#cdd0e2}.field{margin:17px 0}.field label{display:block;font-weight:820;margin-bottom:8px}.field input,.field select{width:100%;padding:15px;border:1px solid #DADBE5;border-radius:15px;background:#fff;font-size:16px;outline:none}.field input:focus,.field select:focus{border-color:var(--b);box-shadow:0 0 0 3px rgba(22,71,216,.1)}.consent{display:flex;gap:9px;align-items:flex-start;color:var(--g);font-size:13px;line-height:1.4}.consent input{margin-top:3px}.error{color:#B42318;font-size:14px;font-weight:650;margin-top:10px}.unknown{border:0;background:transparent;color:var(--b);font-weight:760;padding:8px 0 0;cursor:pointer}.unknown.on{color:var(--p)}.resultbox{padding:25px;border-radius:22px;background:linear-gradient(135deg,#F7F4FF,#FFF3FA);border:1px solid #ECE5FF;margin:17px 0}.big{font-size:clamp(42px,10vw,70px);font-weight:950;letter-spacing:-.06em;line-height:.96;margin:8px 0 12px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}.metric{padding:17px;border:1px solid var(--l);border-radius:17px;background:#fff}.metric b{display:block;font-size:27px;letter-spacing:-.04em}.metric span{font-size:13px;color:var(--g)}.chain{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:18px 0}.chain span{border:1px solid var(--l);background:#fff;padding:9px 11px;border-radius:11px;font-size:14px;font-weight:750}.chain i{font-style:normal;color:var(--p);font-weight:900}.diag{border-left:5px solid var(--p);background:#FFF5FB;padding:17px;border-radius:0 17px 17px 0;margin:18px 0}.diag b{display:block;font-size:20px;margin-bottom:6px}.about{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center}.photo{min-height:320px;border-radius:23px;overflow:hidden;background:#eee}.photo img{width:100%;height:100%;object-fit:cover;display:block}.cases,.ctas{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}.case,.cta{border:1px solid var(--l);border-radius:21px;padding:20px;background:#fff}.tag{font-size:12px;font-weight:900;color:var(--b);text-transform:uppercase;letter-spacing:.06em}.sum{font-size:24px;font-weight:950;margin:7px 0 12px;letter-spacing:-.04em}.case p,.cta p{font-size:15px}.note{font-size:12px;color:var(--g);margin-top:10px}.cta{display:flex;flex-direction:column}.cta p{flex:1}.cta .btn{margin-top:10px}.return{text-align:center;padding:38px 24px}.footer{text-align:center;color:var(--g);font-size:12px;padding:20px 5px}.tiny{text-align:center;color:var(--g);font-size:12px;margin-top:9px}@media(max-width:680px){.about,.cases,.ctas,.metrics{grid-template-columns:1fr}.pad,.section{padding:24px 20px}.photo{min-height:300px}}
+</style>
+</head><body><main class="wrap">
+<div class="top"><div class="brand">Галина Коновалова</div><div class="step" id="step">Калькулятор дохода</div></div><div class="progress"><i id="bar"></i></div>
+<section class="card">
+<div id="hero" class="pad"><div class="pill">Для экспертов и специалистов</div><h1>КАЛЬКУЛЯТОР <span class="accent">ТВОЕГО ДОХОДА</span></h1><p class="lead">Посчитай, сколько тебе реально нужно клиентов, продаж и целевых действий, чтобы выйти на нужную сумму.</p><div class="points"><div>увидишь, сколько продаж нужно именно при твоем чеке</div><div>разложишь свой путь от аудитории до денег</div><div>поймешь, где сейчас лежит самая быстрая точка роста</div></div><button class="btn primary" id="start">ПОСЧИТАТЬ МОЙ ДОХОД</button><div class="tiny">Займет около 3 минут</div></div>
+<div id="return" class="hidden return"><div class="pill">Расчет уже готов</div><h2>Ты уже проходил(а) калькулятор с этого устройства</h2><p class="lead">Я сохранила твой результат. Пересчитывать цифры бесконечно не будем. Лучше посмотрим, что с ними делать дальше.</p><button class="btn primary" id="openSaved">Открыть мой расчет</button></div>
+<div id="role" class="hidden pad"><div class="pill">Шаг 1</div><h2>Кто ты?</h2><p>Выбери то, что ближе всего.</p><div class="choices" id="roles"><button class="choice" data-v="Психолог">Психолог</button><button class="choice" data-v="Коуч">Коуч</button><button class="choice" data-v="Астролог">Астролог</button><button class="choice" data-v="Эзотерик">Эзотерик</button><button class="choice" data-v="Маркетолог">Маркетолог</button><button class="choice" data-v="SMM специалист">SMM специалист</button><button class="choice" data-v="Продюсер">Продюсер</button><button class="choice" data-v="Другой эксперт">Другой эксперт</button></div></div>
+<div id="contacts" class="hidden pad"><div class="pill">Шаг 2</div><h2>Сохраним твой расчет</h2><p>Оставь имя, Telegram и email. После этого перейдем к цифрам.</p><div class="field"><label>Имя</label><input id="name" placeholder="Например, Аня"></div><div class="field"><label>Telegram</label><input id="tg" placeholder="@username"></div><div class="field"><label>Email</label><input id="email" type="email" placeholder="name@example.com"></div><label class="consent"><input id="consent" type="checkbox"><span>Согласен(на) на обработку указанных данных для получения результата расчета и материалов по теме продаж и продвижения.</span></label><div id="eContacts" class="error hidden"></div><button class="btn dark" id="contactsNext">ДАЛЬШЕ</button></div>
+<div id="goal" class="hidden pad"><div class="pill">Шаг 3</div><h2>Теперь про деньги</h2><p>Сколько ты хочешь зарабатывать в месяц и какой у тебя сейчас средний чек?</p><div class="field"><label>Желаемый доход в месяц, ₽</label><input id="target" type="number" min="1" inputmode="numeric" placeholder="300000"></div><div class="field"><label>Средний чек продукта или услуги, ₽</label><input id="price" type="number" min="1" inputmode="numeric" placeholder="30000"></div><div class="field"><label>Что ты сейчас в основном продаешь?</label><select id="product"><option value="">Выбери вариант</option><option>Консультации</option><option>Личное сопровождение</option><option>Группу или курс</option><option>Услугу для клиентов</option><option>Несколько продуктов</option><option>Пока ничего стабильно не продаю</option></select></div><div id="eGoal" class="error hidden"></div><button class="btn dark" id="goalNext">ДАЛЬШЕ</button></div>
+<div id="source" class="hidden pad"><div class="pill">Шаг 4</div><h2>Откуда сейчас чаще всего приходят люди?</h2><p>Не где у тебя есть аккаунт, а откуда реально начинается путь к покупке.</p><div class="choices" id="sources"><button class="choice" data-v="Threads">Threads</button><button class="choice" data-v="Instagram">Instagram</button><button class="choice" data-v="Telegram">Telegram</button><button class="choice" data-v="Рекомендации">Рекомендации</button><button class="choice" data-v="Реклама">Реклама</button><button class="choice" data-v="Эфиры">Эфиры или вебинары</button><button class="choice" data-v="Другое">Другое</button></div></div>
+<div id="dest" class="hidden pad"><div class="pill">Шаг 5</div><h2>Куда ты ведешь человека дальше?</h2><p>Выбери путь, по которому сейчас чаще всего идет клиент.</p><div class="choices" id="dests"><button class="choice" data-v="dm">Сразу в личные сообщения</button><button class="choice" data-v="telegram">В Telegram канал</button><button class="choice" data-v="leadmagnet">На лид магнит</button><button class="choice" data-v="live">На эфир или вебинар</button><button class="choice" data-v="diagnostic">На разбор или диагностику</button><button class="choice" data-v="direct">Сразу на оплату</button><button class="choice" data-v="none">Никуда. Просто веду контент и иногда кто то покупает</button></div></div>
+<div id="numbers" class="hidden pad"><div class="pill">Шаг 6</div><h2>Последние цифры</h2><p id="numbersIntro"></p><div id="numberFields"></div><div id="eNumbers" class="error hidden"></div><button class="btn dark" id="calc">ПОКАЗАТЬ МОЮ ДЕНЕЖНУЮ КАРТУ</button></div>
+<div id="result" class="hidden"><div class="pad"><div class="pill">Твоя денежная карта</div><h2 id="resultTitle"></h2><div class="resultbox"><div class="muted">Чтобы выйти на твою цель, тебе нужно</div><div class="big accent" id="needBig">0 продаж</div><p id="resultLead"></p></div><div class="metrics" id="resultMetrics"></div><div class="chain" id="chain"></div><div class="diag"><b id="diagTitle"></b><div id="diagText"></div></div><p id="resultClose"></p></div>
+<div class="section about"><div><div class="pill">Кто вообще тебе все это считал?</div><h2>Я Галина Коновалова</h2><p class="lead">Маркетолог и стратег.</p><p>Много лет я работаю с экспертами, продуктами, продажами и продвижением.</p><p>Больше всего люблю находить тот самый затык, из за которого человек вроде делает много, ведет соцсети, создает продукты, продает, а денег все равно не столько, сколько хочется.</p><p><b>Моя задача не заставить тебя делать еще больше.</b></p><p>А показать, какие именно цифры должны сойтись в твоей системе, чтобы действия наконец начали превращаться в деньги.</p></div><div class="photo"><img id="profilePhoto" alt="Галина Коновалова"></div></div>
+<div class="section"><div class="pill">Разные модели. Одна логика</div><h2>Как может выглядеть рост</h2><p class="muted">Первые три карточки пока иллюстративные. Перед рекламным запуском их лучше заменить на подтвержденные клиентские истории.</p><div class="cases"><article class="case"><div class="tag">Психолог</div><div class="sum">С 20 000 ₽ до 156 000 ₽</div><p>До работы с системой доход был около 20 тысяч в месяц и очень нестабильно. Клиенты то приходили, то снова тишина. Пересобрали продукт, подняли чек и выстроили понятный путь к продаже. В итоге продажи дошли до 156 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Астролог</div><div class="sum">С нуля до 248 000 ₽</div><p>Маленькая аудитория, консультации по 2 000 ₽ и ощущение, что запуск пока вообще не для нее. Собрали продукты, выбрали основной и разложили продажи по шагам. Итоговая модель дала 248 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Коуч</div><div class="sum">С личной работы до 430 000 ₽</div><p>Личная работа уже уперлась в потолок. Чтобы зарабатывать больше, нужно было брать еще больше людей. Собрали групповую программу и новую модель продаж. Первый набор в таком формате дал 430 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Маркетолог</div><div class="sum">С нуля до 3 700 000 ₽</div><p>По отдельности было много навыков, но собрать полноценный запуск от идеи до денег не получалось. Собрали продукт, оффер, механику запуска и продажи целиком. В результате 3,7 млн ₽ и навык делать полноценные запуски для себя и клиентов.</p></article></div></div>
+<div class="section"><div class="pill">Что дальше?</div><h2>Теперь ты знаешь свои цифры</h2><p>Посчитать их было самой легкой частью. Теперь нужно решить, что именно менять в твоей системе, чтобы эта сумма стала реальной.</p><div class="ctas"><article class="cta"><h3>Хочу разбор моей ситуации</h3><p>Хочу понять, где у меня сейчас самые быстрые деньги и что даст рост дохода без кучи лишних действий.</p><a class="btn primary" href="https://t.me/m/EC0wjurQOTY6" target="_blank" rel="noopener">ХОЧУ РАЗБОР</a></article><article class="cta"><h3>Хочу попасть в реалити</h3><p>Хочу посмотреть, как все это собирается вживую, пройти путь вместе и увидеть, что будет работать именно у меня.</p><a class="btn primary" href="https://t.me/m/Ux-uXANNMDFi" target="_blank" rel="noopener">ХОЧУ В РЕАЛИТИ</a></article></div></div></div>
+</section><div class="footer">Калькулятор твоего дохода · Галина Коновалова</div></main>
+<script>
+const KEY='income_calc_expert_v1',S={role:'',name:'',tg:'',email:'',target:0,price:0,product:'',source:'',dest:'',m:{},r:null};const $=x=>document.getElementById(x),screens=['hero','return','role','contacts','goal','source','dest','numbers','result'],money=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0))+' ₽',num=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0));const dl={dm:'личные сообщения',telegram:'Telegram канал',leadmagnet:'лид магнит',live:'эфир или вебинар',diagnostic:'разбор или диагностика',direct:'оплата',none:'без понятного пути'};
+function show(id,n){screens.forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden');if(n){$('step').textContent=`Шаг ${n} из 6`;$('bar').style.width=n/6*100+'%'}else if(id==='result'){$('step').textContent='Твой результат';$('bar').style.width='100%'}else{$('step').textContent='Калькулятор дохода';$('bar').style.width='0'}scrollTo({top:0,behavior:'smooth'})}
+function err(id,t){$(id).textContent=t;$(id).classList.remove('hidden')}function clear(id){$(id).classList.add('hidden')}function choose(box,key,next){document.querySelectorAll(`#${box} [data-v]`).forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;setTimeout(next,90)})}
+function f(id,label,p='0'){return `<div class="field"><label>${label}</label><input id="${id}" type="number" min="0" inputmode="numeric" placeholder="${p}"><button type="button" class="unknown" data-for="${id}">Не знаю эту цифру</button></div>`}function unknowns(){document.querySelectorAll('.unknown').forEach(b=>b.onclick=()=>{let i=$(b.dataset.for),on=!i.disabled;i.disabled=on;i.value='';b.classList.toggle('on',on);b.textContent=on?'Оставить как неизвестно':'Я знаю эту цифру'})}
+function renderFields(){let d=S.dest,h='';$('numbersIntro').textContent=d==='none'?'Раз у тебя пока нет понятного пути клиента, мне нужна только одна цифра.':`Посмотрим, что происходит на пути ${S.source} → ${dl[d]} → продажа.`;if(d==='none')h=f('sales','Сколько продаж в среднем происходит за месяц?','2');else if(['dm','diagnostic'].includes(d)){h=f('first',d==='dm'?'Сколько людей в месяц реально начинают диалог о покупке?':'Сколько заявок на разбор или диагностику приходит в месяц?','20')+f('sales','Сколько из них покупают?','4')}else if(d==='direct')h=f('first','Сколько человек в месяц доходит до шага оплаты?','40')+f('sales','Сколько в итоге покупают?','4');else{let q={telegram:`Сколько человек в месяц переходит из ${S.source} в Telegram?`,leadmagnet:`Сколько человек в месяц забирает твой лид магнит из ${S.source}?`,live:`Сколько человек в месяц регистрируется на эфир из ${S.source}?`};h=f('first',q[d]||'Сколько человек делает следующий шаг?','100')+f('apps','Сколько из них доходит до диалога или заявки на покупку?','10')+f('sales','Сколько в итоге покупают?','2')}$('numberFields').innerHTML=h;unknowns()}
+function val(id){let e=$(id);if(!e||e.disabled||e.value==='')return null;let v=+e.value;return Number.isFinite(v)&&v>=0?v:null}
+function calculate(){let need=Math.ceil(S.target/S.price),first=val('first'),apps=val('apps'),sales=val('sales'),rev=sales===null?null:sales*S.price,req=null;if(first>0&&sales>0)req=Math.ceil(need/(sales/first));let missing=sales===null||(S.dest!=='none'&&first===null)||(!['none','dm','diagnostic','direct'].includes(S.dest)&&apps===null),dt,dx;if(S.dest==='none'){dt='Сейчас у тебя нет предсказуемого пути клиента';dx='Продажи могут случаться, но ты не можешь повторять их по понятной схеме. Поэтому один месяц может быть сильным, а следующий пустым, и непонятно, что именно повлияло на деньги.'}else if(missing){dt='У тебя есть слепая зона в цифрах';dx='Ты уже ведешь людей к продаже, но часть переходов не считаешь. Пока этих цифр нет, невозможно понять, какой канал реально приносит деньги и что именно нужно увеличить для роста.'}else if(sales===0){dt='Люди пока не доходят до покупки';dx='Вход в воронку уже есть, но на выходе ноль продаж. Сейчас важнее не гнать еще больше людей, а разобраться, что ломается между интересом и оплатой.'}else if(apps!==null&&first>0){let ar=apps/first,cr=sales/apps;if(ar<cr){dt='Самая заметная потеря сейчас происходит до диалога о покупке';dx='Люди делают первый шаг, но большая часть не доходит до заявки или нормального разговора о покупке. Именно здесь по твоим цифрам теряется больше всего потенциальных продаж.'}else{dt='Самая заметная потеря сейчас происходит в продаже';dx='До диалога люди доходят, но дальше часть денег теряется уже на этапе решения и оплаты. Значит, проблема не только в охватах или количестве аудитории.'}}else{dt='Твоя главная цифра уже видна';dx='Теперь у тебя есть не абстрактная цель, а понятное количество продаж и действий, которое должно происходить каждый месяц.'}S.m={first,apps,sales,rev,req};S.r={need,dt,dx};localStorage.setItem(KEY,JSON.stringify(S));renderResult()}
+function renderResult(){let m=S.m,n=S.r.need;$('resultTitle').textContent=`${S.name}, вот твоя математика`;$('needBig').textContent=num(n)+(n===1?' продажа':' продаж');$('resultLead').innerHTML=`При среднем чеке <b>${money(S.price)}</b> для дохода <b>${money(S.target)}</b> тебе нужно минимум <b>${n} продаж</b> в месяц.`;$('resultMetrics').innerHTML=`<div class="metric"><b>${money(S.target)}</b><span>твоя цель</span></div><div class="metric"><b>${money(S.price)}</b><span>средний чек</span></div><div class="metric"><b>${m.rev===null?'не считаешь':money(m.rev)}</b><span>текущая выручка по введенным продажам</span></div><div class="metric"><b>${m.req===null?'?':num(m.req)}</b><span>первых целевых действий нужно при текущей конверсии</span></div>`;let c=[`<span>${S.source}</span>`,'<i>→</i>',`<span>${dl[S.dest]}</span>`];if(m.apps!==null)c.push('<i>→</i>',`<span>${num(m.apps)} заявок</span>`);if(m.sales!==null)c.push('<i>→</i>',`<span>${num(m.sales)} продаж</span>`);$('chain').innerHTML=c.join('');$('diagTitle').textContent=S.r.dt;$('diagText').textContent=S.r.dx;$('resultClose').innerHTML=m.req!==null?`Если ничего внутри пути не менять, для цели <b>${money(S.target)}</b> тебе понадобится примерно <b>${num(m.req)}</b> первых целевых действий в месяц. И вот здесь видно, нужно ли тебе реально больше аудитории или деньги уже теряются внутри существующей системы.`:`Для твоей цели нужно <b>${n} продаж</b>. Но часть пути сейчас не измеряется. Поэтому вопрос не в том, чтобы срочно делать еще больше контента. Сначала нужно увидеть, как именно человек доходит до покупки.`;show('result')}
+$('start').onclick=()=>show('role',1);choose('roles','role',()=>show('contacts',2));$('contactsNext').onclick=()=>{clear('eContacts');let n=$('name').value.trim(),t=$('tg').value.trim(),e=$('email').value.trim();if(!n||!t||!e||!$('consent').checked)return err('eContacts','Заполни имя, Telegram, email и отметь согласие.');if(!/^@[A-Za-z0-9_]{5,32}$/.test(t))return err('eContacts','Telegram укажи через @username.');if(!/^\S+@\S+\.\S+$/.test(e))return err('eContacts','Проверь email. Кажется, в нем ошибка.');Object.assign(S,{name:n,tg:t,email:e});show('goal',3)};$('goalNext').onclick=()=>{clear('eGoal');let t=+$('target').value,p=+$('price').value,pr=$('product').value;if(!(t>0)||!(p>0)||!pr)return err('eGoal','Укажи желаемый доход, средний чек и что ты продаешь.');Object.assign(S,{target:t,price:p,product:pr});show('source',4)};choose('sources','source',()=>show('dest',5));choose('dests','dest',()=>{renderFields();show('numbers',6)});$('calc').onclick=()=>{clear('eNumbers');let s=val('sales'),a=val('apps'),f1=val('first');if(f1!==null&&a!==null&&a>f1)return err('eNumbers','Проверь цифры. Заявок не может быть больше, чем людей на предыдущем шаге.');if(a!==null&&s!==null&&s>a)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем заявок.');if(a===null&&f1!==null&&s!==null&&s>f1)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем людей на предыдущем шаге.');calculate()};$('openSaved').onclick=()=>{let x=JSON.parse(localStorage.getItem(KEY)||'null');if(x){Object.assign(S,x);renderResult()}else show('hero')};if(new URLSearchParams(location.search).get('reset')==='1'){localStorage.removeItem(KEY);history.replaceState(null,'',location.pathname)}fetch('assets/galina.b64').then(r=>r.text()).then(x=>$('profilePhoto').src='data:image/webp;base64,'+x.trim()).catch(()=>{});localStorage.getItem(KEY)?show('return'):show('hero');
+</script></body></html>

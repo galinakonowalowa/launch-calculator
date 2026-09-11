@@ -1,49 +1,275 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Калькулятор твоего дохода</title><meta name="description" content="Посчитай, сколько тебе реально нужно клиентов и продаж, чтобы выйти на нужную сумму.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Калькулятор твоего дохода</title>
+<meta name="description" content="Посчитай, сколько тебе реально нужно клиентов и продаж, чтобы выйти на нужную сумму.">
 <style>
-:root{--b:#1647D8;--p:#F22998;--m:#FFF9F5;--i:#111116;--g:#70717B;--l:#E8E8EF}*{box-sizing:border-box}body{margin:0;color:var(--i);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 0,rgba(242,41,152,.1),transparent 24%),radial-gradient(circle at 92% 4%,rgba(22,71,216,.1),transparent 24%),linear-gradient(#fff,var(--m));min-height:100vh}button,input,select{font:inherit}.wrap{width:min(820px,100%);margin:auto;padding:14px 12px 55px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:4px 2px 12px}.brand{font-weight:900}.step,.muted{color:var(--g);font-size:13px}.progress{height:6px;background:#eeeef4;border-radius:99px;overflow:hidden;margin-bottom:16px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--p));transition:.25s}.card{background:#fffffff2;border:1px solid var(--l);border-radius:25px;overflow:hidden;box-shadow:0 18px 55px rgba(20,20,35,.08)}.pad,.section{padding:clamp(22px,5vw,42px)}.section{border-top:1px solid var(--l)}.hidden{display:none!important}.pill{display:inline-block;padding:8px 12px;border-radius:99px;background:#F2EEFF;color:#50309E;font-size:13px;font-weight:850;margin-bottom:17px}h1,h2,h3{letter-spacing:-.045em;line-height:1.03;margin:0}h1{font-size:clamp(38px,8vw,64px)}h2{font-size:clamp(29px,6vw,43px)}h3{font-size:22px}.accent{background:linear-gradient(90deg,var(--b),var(--p));background-clip:text;-webkit-background-clip:text;color:transparent}p{font-size:17px;line-height:1.55;margin:14px 0}.lead{font-size:20px}.points{display:grid;gap:9px;margin:22px 0}.points div{font-weight:700;font-size:15px}.points div:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--p));margin-right:10px}.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:17px;padding:15px 18px;text-decoration:none;font-weight:850;cursor:pointer;text-align:center}.primary{color:#fff;background:linear-gradient(90deg,var(--b),var(--p));margin-top:22px;box-shadow:0 10px 26px rgba(90,50,210,.18)}.dark{color:#fff;background:var(--i);margin-top:20px}.choices{display:grid;gap:10px;margin-top:22px}.choice{width:100%;text-align:left;border:1px solid var(--l);background:#F8F8FB;border-radius:17px;padding:17px 18px;font-weight:780;cursor:pointer;color:var(--i)}.choice:hover{background:#fff;border-color:#cdd0e2}.field{margin:17px 0}.field label{display:block;font-weight:820;margin-bottom:8px}.field input,.field select{width:100%;padding:15px;border:1px solid #DADBE5;border-radius:15px;background:#fff;font-size:16px;outline:none}.field input:focus,.field select:focus{border-color:var(--b);box-shadow:0 0 0 3px rgba(22,71,216,.1)}.consent{display:flex;gap:9px;align-items:flex-start;color:var(--g);font-size:13px;line-height:1.4}.consent input{margin-top:3px}.error{color:#B42318;font-size:14px;font-weight:650;margin-top:10px}.unknown{border:0;background:transparent;color:var(--b);font-weight:760;padding:8px 0 0;cursor:pointer}.unknown.on{color:var(--p)}.resultbox{padding:25px;border-radius:22px;background:linear-gradient(135deg,#F7F4FF,#FFF3FA);border:1px solid #ECE5FF;margin:17px 0}.big{font-size:clamp(42px,10vw,70px);font-weight:950;letter-spacing:-.06em;line-height:.96;margin:8px 0 12px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}.metric{padding:17px;border:1px solid var(--l);border-radius:17px;background:#fff}.metric b{display:block;font-size:27px;letter-spacing:-.04em}.metric span{font-size:13px;color:var(--g)}.chain{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:18px 0}.chain span{border:1px solid var(--l);background:#fff;padding:9px 11px;border-radius:11px;font-size:14px;font-weight:750}.chain i{font-style:normal;color:var(--p);font-weight:900}.diag{border-left:5px solid var(--p);background:#FFF5FB;padding:17px;border-radius:0 17px 17px 0;margin:18px 0}.diag b{display:block;font-size:20px;margin-bottom:6px}.about{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center}.photo{min-height:320px;border-radius:23px;overflow:hidden;background:#eee}.photo img{width:100%;height:100%;object-fit:cover;display:block}.cases,.ctas{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}.case,.cta{border:1px solid var(--l);border-radius:21px;padding:20px;background:#fff}.tag{font-size:12px;font-weight:900;color:var(--b);text-transform:uppercase;letter-spacing:.06em}.sum{font-size:24px;font-weight:950;margin:7px 0 12px;letter-spacing:-.04em}.case p,.cta p{font-size:15px}.note{font-size:12px;color:var(--g);margin-top:10px}.cta{display:flex;flex-direction:column}.cta p{flex:1}.cta .btn{margin-top:10px}.return{text-align:center;padding:38px 24px}.footer{text-align:center;color:var(--g);font-size:12px;padding:20px 5px}.tiny{text-align:center;color:var(--g);font-size:12px;margin-top:9px}@media(max-width:680px){.about,.cases,.ctas,.metrics{grid-template-columns:1fr}.pad,.section{padding:24px 20px}.photo{min-height:300px}}
+:root{--b:#1647D8;--p:#F22998;--bg:#09090D;--card:#0F0F14;--soft:#15151B;--soft2:#191922;--text:#F7F7FB;--muted:#A8A8B3;--line:#2B2B36;--danger:#FF7A8A}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 10% 0,rgba(242,41,152,.16),transparent 28%),radial-gradient(circle at 90% 2%,rgba(22,71,216,.18),transparent 28%),linear-gradient(180deg,#08080B 0%,#0D0D12 52%,#09090D 100%);min-height:100vh}button,input,select{font:inherit}.wrap{width:min(820px,100%);margin:auto;padding:14px 12px 55px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:4px 2px 12px}.brand{font-weight:900}.step,.muted{color:var(--muted);font-size:13px}.progress{height:6px;background:#22222B;border-radius:99px;overflow:hidden;margin-bottom:16px}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--p));transition:.25s}.card{background:rgba(15,15,20,.96);border:1px solid #292933;border-radius:25px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.42)}.pad,.section{padding:clamp(22px,5vw,42px)}.section{border-top:1px solid #2A2A34}.hidden{display:none!important}.pill{display:inline-block;padding:8px 12px;border-radius:99px;background:#21172B;color:#F4B6DB;border:1px solid #3A2446;font-size:13px;font-weight:850;margin-bottom:17px}h1,h2,h3{letter-spacing:-.045em;line-height:1.03;margin:0}h1{font-size:clamp(38px,8vw,64px)}h2{font-size:clamp(29px,6vw,43px)}h3{font-size:22px}.accent{background:linear-gradient(90deg,var(--b),var(--p));background-clip:text;-webkit-background-clip:text;color:transparent}p{font-size:17px;line-height:1.55;margin:14px 0}.lead{font-size:20px}.points{display:grid;gap:9px;margin:22px 0}.points div{font-weight:700;font-size:15px}.points div:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--p));margin-right:10px}.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:17px;padding:15px 18px;text-decoration:none;font-weight:850;cursor:pointer;text-align:center}.primary{color:#fff;background:linear-gradient(90deg,var(--b),var(--p));margin-top:22px;box-shadow:0 10px 26px rgba(90,50,210,.18)}.dark{color:#fff;background:#25252E;border:1px solid #3A3A47;margin-top:20px}.dark:hover{background:#30303B}.choices{display:grid;gap:10px;margin-top:22px}.choice{width:100%;text-align:left;border:1px solid #30303B;background:#17171D;border-radius:17px;padding:17px 18px;font-weight:780;cursor:pointer;color:var(--text);transition:.18s}.choice:hover{background:#1D1D25;border-color:#4A4A5B}.choice.selected{border-color:var(--p);background:linear-gradient(135deg,rgba(242,41,152,.15),rgba(22,71,216,.12));box-shadow:0 0 0 1px rgba(242,41,152,.16) inset}.choice.selected:after{content:"✓";float:right;color:#FF70BD;font-weight:950}.field{margin:17px 0}.field label{display:block;font-weight:820;margin-bottom:8px}.field input,.field select{width:100%;padding:15px;border:1px solid #343440;border-radius:15px;background:#15151B;color:var(--text);font-size:16px;outline:none}.field input::placeholder{color:#777783}.field select option{background:#15151B;color:var(--text)}.field input:focus,.field select:focus{border-color:var(--b);box-shadow:0 0 0 3px rgba(22,71,216,.13)}.consent{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.45;margin:13px 0}.consent input{margin-top:3px;accent-color:var(--p)}.consent strong{color:#D9D9E2}.consent-note{font-size:12px;color:#858592;margin:4px 0 0}.error{color:var(--danger);font-size:14px;font-weight:650;margin-top:10px}.unknown{border:0;background:transparent;color:#6F94FF;font-weight:760;padding:8px 0 0;cursor:pointer}.unknown.on{color:#FF65B8}.resultbox{padding:25px;border-radius:22px;background:linear-gradient(135deg,#17152A,#241321);border:1px solid #343047;margin:17px 0}.big{font-size:clamp(42px,10vw,70px);font-weight:950;letter-spacing:-.06em;line-height:.96;margin:8px 0 12px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:17px 0}.metric{padding:17px;border:1px solid #2F2F3A;border-radius:17px;background:#15151B}.metric b{display:block;font-size:27px;letter-spacing:-.04em}.metric span{font-size:13px;color:var(--muted)}.chain{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:18px 0}.chain span{border:1px solid #2F2F3A;background:#15151B;padding:9px 11px;border-radius:11px;font-size:14px;font-weight:750}.chain i{font-style:normal;color:var(--p);font-weight:900}.diag{border-left:5px solid var(--p);background:#251321;padding:17px;border-radius:0 17px 17px 0;margin:18px 0}.diag b{display:block;font-size:20px;margin-bottom:6px}.transition{background:linear-gradient(135deg,rgba(22,71,216,.09),rgba(242,41,152,.09))}.transition h2{max-width:690px}.transition p{max-width:690px}.about{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center}.photo{min-height:320px;border-radius:23px;overflow:hidden;background:#18181F;border:1px solid #2D2D38}.photo img{width:100%;height:100%;object-fit:cover;display:block}.cases-head{display:flex;justify-content:space-between;gap:12px;align-items:end;margin-bottom:18px}.case-controls{display:flex;gap:8px;flex:0 0 auto}.case-arrow{width:46px;height:46px;border-radius:50%;border:1px solid #373743;background:#17171D;color:#fff;font-size:22px;cursor:pointer}.case-arrow:hover{background:#22222B}.cases-track{display:flex;gap:13px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 2px 12px;overscroll-behavior-x:contain}.cases-track::-webkit-scrollbar{display:none}.case{flex:0 0 min(86%,390px);scroll-snap-align:start;border:1px solid #2F2F3A;border-radius:21px;padding:22px;background:#15151B}.tag{font-size:12px;font-weight:900;color:#7EA0FF;text-transform:uppercase;letter-spacing:.06em}.sum{font-size:25px;font-weight:950;margin:7px 0 14px;letter-spacing:-.04em}.case p,.cta p{font-size:15px}.case p{white-space:pre-line}.ctas{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}.cta{border:1px solid #2F2F3A;border-radius:21px;padding:22px;background:#15151B;display:flex;flex-direction:column}.cta p{flex:1}.cta .btn{margin-top:10px}.reality{background:linear-gradient(145deg,rgba(242,41,152,.11),rgba(22,71,216,.11));border-color:#47324A}.return{text-align:center;padding:38px 24px}.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 5px}.tiny{text-align:center;color:var(--muted);font-size:12px;margin-top:9px}.micro{font-size:13px;color:var(--muted);line-height:1.45}.platform-hint{margin-top:11px;color:var(--muted);font-size:13px}.legal-note{margin-top:16px;padding:14px;border:1px solid #2F2F3A;border-radius:14px;background:#131319;color:#9C9CAA;font-size:12px;line-height:1.45}@media(max-width:680px){.about,.ctas,.metrics{grid-template-columns:1fr}.about .photo{order:-1}.pad,.section{padding:24px 20px}.photo{min-height:300px}.cases-head{align-items:center}.case{flex-basis:88%}.case-controls{gap:6px}.case-arrow{width:44px;height:44px}.top{font-size:14px}}
 </style>
-<style>
-:root{--i:#F7F7FB;--g:#A8A8B3;--l:#2B2B36;--m:#0D0D12}
-body{color:var(--i);background:radial-gradient(circle at 10% 0,rgba(242,41,152,.16),transparent 28%),radial-gradient(circle at 90% 2%,rgba(22,71,216,.18),transparent 28%),linear-gradient(180deg,#08080B 0%,#0D0D12 52%,#09090D 100%)}
-.card{background:rgba(15,15,20,.96);border-color:#292933;box-shadow:0 20px 70px rgba(0,0,0,.42)}
-.progress{background:#22222B}.step,.muted,.note,.tiny,.footer,.consent,.metric span{color:#A8A8B3}
-.pill{background:#21172B;color:#F4B6DB;border:1px solid #3A2446}
-.choice{background:#17171D;color:#F7F7FB;border-color:#30303B}.choice:hover{background:#1D1D25;border-color:#4A4A5B}
-.field input,.field select{background:#15151B;color:#F7F7FB;border-color:#343440}.field input::placeholder{color:#777783}.field select option{background:#15151B;color:#F7F7FB}
-.dark{background:#25252E;color:#fff;border:1px solid #3A3A47}.dark:hover{background:#30303B}
-.resultbox{background:linear-gradient(135deg,#17152A,#241321);border-color:#343047}
-.metric,.chain span,.case,.cta{background:#15151B;border-color:#2F2F3A;color:#F7F7FB}
-.diag{background:#251321;color:#F7F7FB}.photo{background:#18181F}.section{border-top-color:#2A2A34}
-.error{color:#FF7A8A}.unknown{color:#6F94FF}.unknown.on{color:#FF65B8}
-</style>
-</head><body><main class="wrap">
-<div class="top"><div class="brand">Галина Коновалова</div><div class="step" id="step">Калькулятор дохода</div></div><div class="progress"><i id="bar"></i></div>
+</head>
+<body>
+<main class="wrap">
+<div class="top"><div class="brand">Галина Коновалова</div><div class="step" id="step">Калькулятор дохода</div></div>
+<div class="progress"><i id="bar"></i></div>
 <section class="card">
-<div id="hero" class="pad"><div class="pill">Для экспертов и специалистов</div><h1>КАЛЬКУЛЯТОР <span class="accent">ТВОЕГО ДОХОДА</span></h1><p class="lead">Посчитай, сколько тебе реально нужно клиентов, продаж и целевых действий, чтобы выйти на нужную сумму.</p><div class="points"><div>увидишь, сколько продаж нужно именно при твоем чеке</div><div>разложишь свой путь от аудитории до денег</div><div>поймешь, где сейчас лежит самая быстрая точка роста</div></div><button class="btn primary" id="start">ПОСЧИТАТЬ МОЙ ДОХОД</button><div class="tiny">Займет около 3 минут</div></div>
-<div id="return" class="hidden return"><div class="pill">Расчет уже готов</div><h2>Ты уже проходил(а) калькулятор с этого устройства</h2><p class="lead">Я сохранила твой результат. Пересчитывать цифры бесконечно не будем. Лучше посмотрим, что с ними делать дальше.</p><button class="btn primary" id="openSaved">Открыть мой расчет</button></div>
-<div id="role" class="hidden pad"><div class="pill">Шаг 1</div><h2>Кто ты?</h2><p>Выбери то, что ближе всего.</p><div class="choices" id="roles"><button class="choice" data-v="Психолог">Психолог</button><button class="choice" data-v="Коуч">Коуч</button><button class="choice" data-v="Астролог">Астролог</button><button class="choice" data-v="Эзотерик">Эзотерик</button><button class="choice" data-v="Маркетолог">Маркетолог</button><button class="choice" data-v="SMM специалист">SMM специалист</button><button class="choice" data-v="Продюсер">Продюсер</button><button class="choice" data-v="Другой эксперт">Другой эксперт</button></div></div>
-<div id="contacts" class="hidden pad"><div class="pill">Шаг 2</div><h2>Сохраним твой расчет</h2><p>Оставь имя, Telegram и email. После этого перейдем к цифрам.</p><div class="field"><label>Имя</label><input id="name" placeholder="Например, Аня"></div><div class="field"><label>Telegram</label><input id="tg" placeholder="@username"></div><div class="field"><label>Email</label><input id="email" type="email" placeholder="name@example.com"></div><label class="consent"><input id="consent" type="checkbox"><span>Согласен(на) на обработку указанных данных для получения результата расчета и материалов по теме продаж и продвижения.</span></label><div id="eContacts" class="error hidden"></div><button class="btn dark" id="contactsNext">ДАЛЬШЕ</button></div>
-<div id="goal" class="hidden pad"><div class="pill">Шаг 3</div><h2>Теперь про деньги</h2><p>Сколько ты хочешь зарабатывать в месяц и какой у тебя сейчас средний чек?</p><div class="field"><label>Желаемый доход в месяц, ₽</label><input id="target" type="number" min="1" inputmode="numeric" placeholder="300000"></div><div class="field"><label>Средний чек продукта или услуги, ₽</label><input id="price" type="number" min="1" inputmode="numeric" placeholder="30000"></div><div class="field"><label>Что ты сейчас в основном продаешь?</label><select id="product"><option value="">Выбери вариант</option><option>Консультации</option><option>Личное сопровождение</option><option>Группу или курс</option><option>Услугу для клиентов</option><option>Несколько продуктов</option><option>Пока ничего стабильно не продаю</option></select></div><div id="eGoal" class="error hidden"></div><button class="btn dark" id="goalNext">ДАЛЬШЕ</button></div>
-<div id="source" class="hidden pad"><div class="pill">Шаг 4</div><h2>Откуда сейчас чаще всего приходят люди?</h2><p>Не где у тебя есть аккаунт, а откуда реально начинается путь к покупке.</p><div class="choices" id="sources"><button class="choice" data-v="Threads">Threads</button><button class="choice" data-v="Instagram">Instagram</button><button class="choice" data-v="Telegram">Telegram</button><button class="choice" data-v="Рекомендации">Рекомендации</button><button class="choice" data-v="Реклама">Реклама</button><button class="choice" data-v="Эфиры">Эфиры или вебинары</button><button class="choice" data-v="Другое">Другое</button></div></div>
-<div id="dest" class="hidden pad"><div class="pill">Шаг 5</div><h2>Куда ты ведешь человека дальше?</h2><p>Выбери путь, по которому сейчас чаще всего идет клиент.</p><div class="choices" id="dests"><button class="choice" data-v="dm">Сразу в личные сообщения</button><button class="choice" data-v="telegram">В Telegram канал</button><button class="choice" data-v="leadmagnet">На лид магнит</button><button class="choice" data-v="live">На эфир или вебинар</button><button class="choice" data-v="diagnostic">На разбор или диагностику</button><button class="choice" data-v="direct">Сразу на оплату</button><button class="choice" data-v="none">Никуда. Просто веду контент и иногда кто то покупает</button></div></div>
-<div id="numbers" class="hidden pad"><div class="pill">Шаг 6</div><h2>Последние цифры</h2><p id="numbersIntro"></p><div id="numberFields"></div><div id="eNumbers" class="error hidden"></div><button class="btn dark" id="calc">ПОКАЗАТЬ МОЮ ДЕНЕЖНУЮ КАРТУ</button></div>
-<div id="result" class="hidden"><div class="pad"><div class="pill">Твоя денежная карта</div><h2 id="resultTitle"></h2><div class="resultbox"><div class="muted">Чтобы выйти на твою цель, тебе нужно</div><div class="big accent" id="needBig">0 продаж</div><p id="resultLead"></p></div><div class="metrics" id="resultMetrics"></div><div class="chain" id="chain"></div><div class="diag"><b id="diagTitle"></b><div id="diagText"></div></div><p id="resultClose"></p></div>
-<div class="section about"><div><div class="pill">Кто вообще тебе все это считал?</div><h2>Я Галина Коновалова</h2><p class="lead">Маркетолог и стратег.</p><p>Много лет я работаю с экспертами, продуктами, продажами и продвижением.</p><p>Больше всего люблю находить тот самый затык, из за которого человек вроде делает много, ведет соцсети, создает продукты, продает, а денег все равно не столько, сколько хочется.</p><p><b>Моя задача не заставить тебя делать еще больше.</b></p><p>А показать, какие именно цифры должны сойтись в твоей системе, чтобы действия наконец начали превращаться в деньги.</p></div><div class="photo"><img id="profilePhoto" alt="Галина Коновалова"></div></div>
-<div class="section"><div class="pill">Разные модели. Одна логика</div><h2>Как может выглядеть рост</h2><p class="muted">Первые три карточки пока иллюстративные. Перед рекламным запуском их лучше заменить на подтвержденные клиентские истории.</p><div class="cases"><article class="case"><div class="tag">Психолог</div><div class="sum">С 20 000 ₽ до 156 000 ₽</div><p>До работы с системой доход был около 20 тысяч в месяц и очень нестабильно. Клиенты то приходили, то снова тишина. Пересобрали продукт, подняли чек и выстроили понятный путь к продаже. В итоге продажи дошли до 156 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Астролог</div><div class="sum">С нуля до 248 000 ₽</div><p>Маленькая аудитория, консультации по 2 000 ₽ и ощущение, что запуск пока вообще не для нее. Собрали продукты, выбрали основной и разложили продажи по шагам. Итоговая модель дала 248 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Коуч</div><div class="sum">С личной работы до 430 000 ₽</div><p>Личная работа уже уперлась в потолок. Чтобы зарабатывать больше, нужно было брать еще больше людей. Собрали групповую программу и новую модель продаж. Первый набор в таком формате дал 430 000 ₽.</p><div class="note">Иллюстративный пример</div></article><article class="case"><div class="tag">Маркетолог</div><div class="sum">С нуля до 3 700 000 ₽</div><p>По отдельности было много навыков, но собрать полноценный запуск от идеи до денег не получалось. Собрали продукт, оффер, механику запуска и продажи целиком. В результате 3,7 млн ₽ и навык делать полноценные запуски для себя и клиентов.</p></article></div></div>
-<div class="section"><div class="pill">Что дальше?</div><h2>Теперь ты знаешь свои цифры</h2><p>Посчитать их было самой легкой частью. Теперь нужно решить, что именно менять в твоей системе, чтобы эта сумма стала реальной.</p><div class="ctas"><article class="cta"><h3>Хочу разбор моей ситуации</h3><p>Хочу понять, где у меня сейчас самые быстрые деньги и что даст рост дохода без кучи лишних действий.</p><a class="btn primary" href="https://t.me/m/EC0wjurQOTY6" target="_blank" rel="noopener">ХОЧУ РАЗБОР</a></article><article class="cta"><h3>Хочу попасть в реалити</h3><p>Хочу посмотреть, как все это собирается вживую, пройти путь вместе и увидеть, что будет работать именно у меня.</p><a class="btn primary" href="https://t.me/m/Ux-uXANNMDFi" target="_blank" rel="noopener">ХОЧУ В РЕАЛИТИ</a></article></div></div></div>
-</section><div class="footer">Калькулятор твоего дохода · Галина Коновалова</div></main>
+
+<div id="hero" class="pad">
+  <div class="pill">Для экспертов и специалистов</div>
+  <h1>КАЛЬКУЛЯТОР <span class="accent">ТВОЕГО ДОХОДА</span></h1>
+  <p class="lead">Посчитай, сколько тебе реально нужно клиентов, продаж и целевых действий, чтобы выйти на нужную сумму.</p>
+  <div class="points"><div>увидишь, сколько продаж нужно именно при твоем чеке</div><div>разложишь свой путь от аудитории до денег</div><div>поймешь, где сейчас лежит самая быстрая точка роста</div></div>
+  <button class="btn primary" id="start">ПОСЧИТАТЬ МОЙ ДОХОД</button>
+  <div class="tiny">Займет около 3 минут</div>
+</div>
+
+<div id="return" class="hidden return">
+  <div class="pill">Расчет уже готов</div>
+  <h2>Ты уже проходила калькулятор с этого устройства</h2>
+  <p class="lead">Я сохранила твой результат. Пересчитывать цифры бесконечно не будем. Лучше посмотрим, что с ними делать дальше.</p>
+  <button class="btn primary" id="openSaved">Открыть мой расчет</button>
+</div>
+
+<div id="role" class="hidden pad">
+  <div class="pill">Шаг 1</div>
+  <h2>Кто ты?</h2>
+  <p>Чтобы я точнее посчитала твою ситуацию, сначала скажи, чем ты занимаешься. У разных экспертов деньги собираются по-разному.</p>
+  <div class="choices" id="roles">
+    <button class="choice" data-v="Психолог">Психолог</button>
+    <button class="choice" data-v="Коуч / наставник">Коуч / наставник</button>
+    <button class="choice" data-v="Эзотерик">Эзотерик <span class="micro">· астролог, нумеролог и другие направления</span></button>
+    <button class="choice" data-v="Маркетолог / SMM">Маркетолог / SMM</button>
+    <button class="choice" data-v="Продюсер">Продюсер</button>
+    <button class="choice" data-v="Юрист">Юрист</button>
+    <button class="choice" data-v="Нутрициолог">Нутрициолог</button>
+    <button class="choice" data-v="Репетитор / преподаватель">Репетитор / преподаватель</button>
+    <button class="choice" data-v="Консультант / эксперт услуг">Консультант / эксперт услуг</button>
+    <button class="choice" data-v="Другая ниша">Другая ниша</button>
+  </div>
+</div>
+
+<div id="contacts" class="hidden pad">
+  <div class="pill">Шаг 2</div>
+  <h2>Сохраним твой расчет</h2>
+  <p>Оставь имя, Telegram и email. После этого перейдем к цифрам.</p>
+  <div class="field"><label>Имя</label><input id="name" placeholder="Например, Аня"></div>
+  <div class="field"><label>Telegram</label><input id="tg" placeholder="@username"></div>
+  <div class="field"><label>Email</label><input id="email" type="email" placeholder="name@example.com"></div>
+  <label class="consent"><input id="consentData" type="checkbox"><span><strong>Обязательное согласие.</strong> Даю согласие на обработку введенных персональных данных для расчета результата и обратной связи.</span></label>
+  <label class="consent"><input id="consentMarketing" type="checkbox"><span><strong>Отдельное согласие на рассылку.</strong> Согласна получать информационные и рекламные сообщения по email и в Telegram. Отказаться можно в любой момент.</span></label>
+  <div class="consent-note">Вторая галочка не обязательна для прохождения калькулятора.</div>
+  <div id="eContacts" class="error hidden"></div>
+  <button class="btn dark" id="contactsNext">ДАЛЬШЕ</button>
+</div>
+
+<div id="goal" class="hidden pad">
+  <div class="pill">Шаг 3</div>
+  <h2>Теперь про деньги</h2>
+  <p>Сколько ты хочешь зарабатывать в месяц и какой у тебя сейчас средний чек?</p>
+  <div class="field"><label>Желаемый доход в месяц, ₽</label><input id="target" type="number" min="1" inputmode="numeric" placeholder="300000"></div>
+  <div class="field"><label>Средний чек продукта или услуги, ₽</label><input id="price" type="number" min="1" inputmode="numeric" placeholder="30000"></div>
+  <div class="field"><label>Что ты сейчас в основном продаешь?</label><select id="product"><option value="">Выбери вариант</option><option>Консультации</option><option>Личное сопровождение</option><option>Группу или курс</option><option>Услугу для клиентов</option><option>Несколько продуктов</option><option>Пока ничего стабильно не продаю</option></select></div>
+  <div id="eGoal" class="error hidden"></div>
+  <button class="btn dark" id="goalNext">ДАЛЬШЕ</button>
+</div>
+
+<div id="platforms" class="hidden pad">
+  <div class="pill">Шаг 4</div>
+  <h2>Какие площадки ты сейчас реально ведешь?</h2>
+  <p>Можно выбрать несколько. Мне важно увидеть твою реальную картину, а не заставить тебя впихнуть весь бизнес в одну соцсеть.</p>
+  <div class="choices" id="platformChoices">
+    <button class="choice" data-v="Threads">Threads</button>
+    <button class="choice" data-v="Instagram">Instagram</button>
+    <button class="choice" data-v="Telegram">Telegram</button>
+    <button class="choice" data-v="YouTube">YouTube</button>
+    <button class="choice" data-v="VK">VK</button>
+    <button class="choice" data-v="Другая площадка">Другая площадка</button>
+  </div>
+  <div class="platform-hint" id="platformHint">Выбери хотя бы один вариант.</div>
+  <button class="btn dark" id="platformsNext">ДАЛЬШЕ</button>
+</div>
+
+<div id="source" class="hidden pad">
+  <div class="pill">Шаг 5</div>
+  <h2>Откуда чаще всего приходят новые люди?</h2>
+  <p>Не где у тебя есть аккаунт, а откуда обычно начинается путь нового клиента к покупке.</p>
+  <div class="choices" id="sources"></div>
+</div>
+
+<div id="dest" class="hidden pad">
+  <div class="pill">Шаг 6</div>
+  <h2>Куда ты чаще всего ведешь человека?</h2>
+  <p>Нам не нужно строить огромную схему. Выбери только следующий основной шаг.</p>
+  <div class="choices" id="dests">
+    <button class="choice" data-v="telegram">В Telegram канал</button>
+    <button class="choice" data-v="leadmagnet">На лид магнит</button>
+    <button class="choice" data-v="dm">Сразу в личные сообщения</button>
+    <button class="choice" data-v="live">На эфир или вебинар</button>
+    <button class="choice" data-v="diagnostic">На разбор или диагностику</button>
+    <button class="choice" data-v="direct">Сразу на оплату</button>
+    <button class="choice" data-v="none">Никуда. Просто веду контент и иногда кто-то покупает</button>
+  </div>
+</div>
+
+<div id="numbers" class="hidden pad">
+  <div class="pill">Шаг 7</div>
+  <h2>Последние цифры</h2>
+  <p id="numbersIntro"></p>
+  <div id="numberFields"></div>
+  <div id="eNumbers" class="error hidden"></div>
+  <button class="btn dark" id="calc">ПОКАЗАТЬ МОЮ ДЕНЕЖНУЮ КАРТУ</button>
+</div>
+
+<div id="result" class="hidden">
+  <div class="pad">
+    <div class="pill">Твоя денежная карта</div>
+    <h2 id="resultTitle"></h2>
+    <div class="resultbox"><div class="muted">Чтобы выйти на твою цель, тебе нужно</div><div class="big accent" id="needBig">0 продаж</div><p id="resultLead"></p></div>
+    <div class="metrics" id="resultMetrics"></div>
+    <div class="chain" id="chain"></div>
+    <div class="diag"><b id="diagTitle"></b><div id="diagText"></div></div>
+    <p id="resultClose"></p>
+  </div>
+
+  <div class="section transition">
+    <div class="pill">А теперь самое важное</div>
+    <h2>Теперь ты хотя бы видишь свою математику.</h2>
+    <p class="lead">И скорее всего уже понимаешь, что проблема может быть вообще не там, где ты искала.</p>
+  </div>
+
+  <div class="section about">
+    <div>
+      <div class="pill">Кто вообще тебе все это считал?</div>
+      <h2>Я Галина Коновалова</h2>
+      <p class="lead">Маркетолог и стратег.</p>
+      <p>Помогаю экспертам собирать продукты, продажи и запуски в понятную систему.</p>
+      <p>Больше всего люблю находить то место, где человек вроде делает много, а деньги почему-то до него не доходят.</p>
+    </div>
+    <div class="photo"><img id="profilePhoto" alt="Галина Коновалова"></div>
+  </div>
+
+  <div class="section">
+    <div class="cases-head">
+      <div><div class="pill">Реальные результаты</div><h2>Что меняется, когда появляется система</h2></div>
+      <div class="case-controls"><button class="case-arrow" id="casePrev" type="button" aria-label="Предыдущий отзыв">‹</button><button class="case-arrow" id="caseNext" type="button" aria-label="Следующий отзыв">›</button></div>
+    </div>
+    <div class="cases-track" id="casesTrack" role="region" aria-label="Отзывы клиентов">
+      <article class="case">
+        <div class="tag">Психолог</div><div class="sum">С 20 000 ₽ до 156 000 ₽</div>
+        <p>Когда я пришла к Гале, у меня было тысяч 20 в месяц. Иногда 30, потом опять тишина. И я вообще не понимала, почему вроде работаю, веду блог, что то рассказываю, а клиентов стабильно нет.
+
+Самое страшное для меня было поднять чек. Я серьезно думала, что после этого ко мне вообще никто не придет 🙈
+
+В итоге мы переделали продукт, я подняла стоимость и впервые начала нормально продавать, а не ждать когда кто нибудь сам напишет.
+
+За запуск получилось 156 000 ₽
+
+Галя, спасибо тебе огромное ❤️ Для меня даже не столько сумма важна, сколько то, что я теперь не боюсь продаж и понимаю что делать.</p>
+      </article>
+      <article class="case">
+        <div class="tag">Астролог</div><div class="sum">С нуля до 248 000 ₽</div>
+        <p>Я вообще пришла с консультациями по 2000 рублей и мыслью ну какая мне еще продуктовая линейка, у меня аудитория маленькая 😂
+
+В итоге сделали несколько продуктов, выбрали что запускаем первым и я просто пошла делать по шагам.
+
+248 000 ₽
+
+Я когда увидела итоговую сумму сначала подумала что где то неправильно посчитала 😅
+
+И самое главное, теперь я понимаю как это повторить. Раньше было сегодня выложила пост, завтра что то еще придумала, потом жду. Сейчас хотя бы есть понимание как из этого делать деньги.</p>
+      </article>
+      <article class="case">
+        <div class="tag">Коуч</div><div class="sum">С личной работы до 430 000 ₽</div>
+        <p>Галина, хочу отдельно сказать тебе спасибо.
+
+До нашей работы я продавала в основном личное сопровождение. Клиенты были, но чтобы больше зарабатывать мне нужно было брать еще людей, а сил на это уже просто не было.
+
+Мы создали групповую программу. Для меня это был абсолютно новый формат и я очень переживала, что группу я вообще не соберу.
+
+Собрала.
+
+Первый набор 430 000 ₽.
+
+И вот после этого у меня реально поменялось отношение к своему бизнесу. Я впервые увидела, что рост дохода не обязательно означает еще больше часов работы.</p>
+      </article>
+      <article class="case">
+        <div class="tag">Маркетолог</div><div class="sum">С нуля до 3 700 000 ₽</div>
+        <p>До Гали я умела много всего по отдельности.
+
+Контент сделать могу
+воронку придумать могу
+что то продать тоже могу
+
+А вот собрать нормальный запуск от идеи до денег я не умела вообще.
+
+И именно этому я наконец научилась у Гали.
+
+Мы полностью собрали продукт, оффер, механику запуска, продажи и в итоге сделали 3,7 млн ₽
+
+Для меня это вообще другой уровень.
+
+Теперь я могу не только сама делать запуски, но и брать клиентов именно на полноценный запуск, а не быть человеком который отвечает за один маленький кусочек проекта.
+
+Галя, это наверное самое ценное что я забрала из нашей работы. Я наконец чувствую себя не просто исполнителем, а маркетологом который умеет отвечать за результат.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="pill">Что дальше?</div>
+    <h2>Увидеть цифры — только начало.</h2>
+    <p class="lead">Теперь главный вопрос: что именно тебе поменять, чтобы прийти к своей сумме быстрее?</p>
+    <div class="ctas">
+      <article class="cta">
+        <h3>Хочу разбор моей ситуации</h3>
+        <p>Хочу понять, где у меня сейчас самые быстрые деньги и что именно даст рост дохода без кучи лишних действий.</p>
+        <a class="btn primary" href="https://t.me/m/EC0wjurQOTY6" target="_blank" rel="noopener">РАЗОБРАТЬ МОЮ СИТУАЦИЮ</a>
+      </article>
+      <article class="cta reality">
+        <h3>Хочу стать героиней реалити</h3>
+        <p>У меня сейчас стартует грандиозное реалити. Я выберу одну героиню и на ее примере вживую соберу стратегию продаж, запуск и покажу весь путь до результата.<br><br><b>Хочешь, чтобы этой героиней стала ты?</b></p>
+        <a class="btn primary" href="https://t.me/m/Ux-uXANNMDFi" target="_blank" rel="noopener">ХОЧУ СТАТЬ ГЕРОИНЕЙ</a>
+      </article>
+    </div>
+  </div>
+</div>
+</section>
+<div class="footer">Калькулятор твоего дохода · Галина Коновалова</div>
+</main>
 <script>
-const KEY='income_calc_expert_v1',S={role:'',name:'',tg:'',email:'',target:0,price:0,product:'',source:'',dest:'',m:{},r:null};const $=x=>document.getElementById(x),screens=['hero','return','role','contacts','goal','source','dest','numbers','result'],money=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0))+' ₽',num=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0));const dl={dm:'личные сообщения',telegram:'Telegram канал',leadmagnet:'лид магнит',live:'эфир или вебинар',diagnostic:'разбор или диагностика',direct:'оплата',none:'без понятного пути'};
-function show(id,n){screens.forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden');if(n){$('step').textContent=`Шаг ${n} из 6`;$('bar').style.width=n/6*100+'%'}else if(id==='result'){$('step').textContent='Твой результат';$('bar').style.width='100%'}else{$('step').textContent='Калькулятор дохода';$('bar').style.width='0'}scrollTo({top:0,behavior:'smooth'})}
-function err(id,t){$(id).textContent=t;$(id).classList.remove('hidden')}function clear(id){$(id).classList.add('hidden')}function choose(box,key,next){document.querySelectorAll(`#${box} [data-v]`).forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;setTimeout(next,90)})}
-function f(id,label,p='0'){return `<div class="field"><label>${label}</label><input id="${id}" type="number" min="0" inputmode="numeric" placeholder="${p}"><button type="button" class="unknown" data-for="${id}">Не знаю эту цифру</button></div>`}function unknowns(){document.querySelectorAll('.unknown').forEach(b=>b.onclick=()=>{let i=$(b.dataset.for),on=!i.disabled;i.disabled=on;i.value='';b.classList.toggle('on',on);b.textContent=on?'Оставить как неизвестно':'Я знаю эту цифру'})}
+const KEY='income_calc_expert_v2';
+const S={role:'',name:'',tg:'',email:'',consentMarketing:false,target:0,price:0,product:'',platforms:[],source:'',dest:'',m:{},r:null};
+const $=x=>document.getElementById(x);
+const screens=['hero','return','role','contacts','goal','platforms','source','dest','numbers','result'];
+const money=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0))+' ₽';
+const num=v=>new Intl.NumberFormat('ru-RU').format(Math.round(+v||0));
+const dl={dm:'личные сообщения',telegram:'Telegram канал',leadmagnet:'лид магнит',live:'эфир или вебинар',diagnostic:'разбор или диагностика',direct:'оплата',none:'без понятного пути'};
+function show(id,n){screens.forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden');if(n){$('step').textContent=`Шаг ${n} из 7`;$('bar').style.width=n/7*100+'%'}else if(id==='result'){$('step').textContent='Твой результат';$('bar').style.width='100%'}else{$('step').textContent='Калькулятор дохода';$('bar').style.width='0'}scrollTo({top:0,behavior:'smooth'})}
+function err(id,t){$(id).textContent=t;$(id).classList.remove('hidden')}
+function clearErr(id){$(id).classList.add('hidden')}
+function choose(box,key,next){document.querySelectorAll(`#${box} [data-v]`).forEach(b=>b.onclick=()=>{S[key]=b.dataset.v;setTimeout(next,90)})}
+function f(id,label,p='0'){return `<div class="field"><label>${label}</label><input id="${id}" type="number" min="0" inputmode="numeric" placeholder="${p}"><button type="button" class="unknown" data-for="${id}">Не знаю эту цифру</button></div>`}
+function unknowns(){document.querySelectorAll('.unknown').forEach(b=>b.onclick=()=>{let i=$(b.dataset.for),on=!i.disabled;i.disabled=on;i.value='';b.classList.toggle('on',on);b.textContent=on?'Оставить как неизвестно':'Я знаю эту цифру'})}
+function renderSources(){const social=S.platforms.filter(x=>x!=='Другая площадка');const fixed=['Рекомендации','Реклама','Эфиры','Другое'];const items=[...new Set([...social,...fixed])];$('sources').innerHTML=items.map(v=>`<button class="choice" data-v="${v}">${v==='Эфиры'?'Эфиры или вебинары':v}</button>`).join('');choose('sources','source',()=>show('dest',6))}
 function renderFields(){let d=S.dest,h='';$('numbersIntro').textContent=d==='none'?'Раз у тебя пока нет понятного пути клиента, мне нужна только одна цифра.':`Посмотрим, что происходит на пути ${S.source} → ${dl[d]} → продажа.`;if(d==='none')h=f('sales','Сколько продаж в среднем происходит за месяц?','2');else if(['dm','diagnostic'].includes(d)){h=f('first',d==='dm'?'Сколько людей в месяц реально начинают диалог о покупке?':'Сколько заявок на разбор или диагностику приходит в месяц?','20')+f('sales','Сколько из них покупают?','4')}else if(d==='direct')h=f('first','Сколько человек в месяц доходит до шага оплаты?','40')+f('sales','Сколько в итоге покупают?','4');else{let q={telegram:`Сколько человек в месяц переходит из ${S.source} в Telegram?`,leadmagnet:`Сколько человек в месяц забирает твой лид магнит из ${S.source}?`,live:`Сколько человек в месяц регистрируется на эфир из ${S.source}?`};h=f('first',q[d]||'Сколько человек делает следующий шаг?','100')+f('apps','Сколько из них доходит до диалога или заявки на покупку?','10')+f('sales','Сколько в итоге покупают?','2')}$('numberFields').innerHTML=h;unknowns()}
 function val(id){let e=$(id);if(!e||e.disabled||e.value==='')return null;let v=+e.value;return Number.isFinite(v)&&v>=0?v:null}
 function calculate(){let need=Math.ceil(S.target/S.price),first=val('first'),apps=val('apps'),sales=val('sales'),rev=sales===null?null:sales*S.price,req=null;if(first>0&&sales>0)req=Math.ceil(need/(sales/first));let missing=sales===null||(S.dest!=='none'&&first===null)||(!['none','dm','diagnostic','direct'].includes(S.dest)&&apps===null),dt,dx;if(S.dest==='none'){dt='Сейчас у тебя нет предсказуемого пути клиента';dx='Продажи могут случаться, но ты не можешь повторять их по понятной схеме. Поэтому один месяц может быть сильным, а следующий пустым, и непонятно, что именно повлияло на деньги.'}else if(missing){dt='У тебя есть слепая зона в цифрах';dx='Ты уже ведешь людей к продаже, но часть переходов не считаешь. Пока этих цифр нет, невозможно понять, какой канал реально приносит деньги и что именно нужно увеличить для роста.'}else if(sales===0){dt='Люди пока не доходят до покупки';dx='Вход в воронку уже есть, но на выходе ноль продаж. Сейчас важнее не гнать еще больше людей, а разобраться, что ломается между интересом и оплатой.'}else if(apps!==null&&first>0){let ar=apps/first,cr=sales/apps;if(ar<cr){dt='Самая заметная потеря сейчас происходит до диалога о покупке';dx='Люди делают первый шаг, но большая часть не доходит до заявки или нормального разговора о покупке. Именно здесь по твоим цифрам теряется больше всего потенциальных продаж.'}else{dt='Самая заметная потеря сейчас происходит в продаже';dx='До диалога люди доходят, но дальше часть денег теряется уже на этапе решения и оплаты. Значит, проблема не только в охватах или количестве аудитории.'}}else{dt='Твоя главная цифра уже видна';dx='Теперь у тебя есть не абстрактная цель, а понятное количество продаж и действий, которое должно происходить каждый месяц.'}S.m={first,apps,sales,rev,req};S.r={need,dt,dx};localStorage.setItem(KEY,JSON.stringify(S));renderResult()}
 function renderResult(){let m=S.m,n=S.r.need;$('resultTitle').textContent=`${S.name}, вот твоя математика`;$('needBig').textContent=num(n)+(n===1?' продажа':' продаж');$('resultLead').innerHTML=`При среднем чеке <b>${money(S.price)}</b> для дохода <b>${money(S.target)}</b> тебе нужно минимум <b>${n} продаж</b> в месяц.`;$('resultMetrics').innerHTML=`<div class="metric"><b>${money(S.target)}</b><span>твоя цель</span></div><div class="metric"><b>${money(S.price)}</b><span>средний чек</span></div><div class="metric"><b>${m.rev===null?'не считаешь':money(m.rev)}</b><span>текущая выручка по введенным продажам</span></div><div class="metric"><b>${m.req===null?'?':num(m.req)}</b><span>первых целевых действий нужно при текущей конверсии</span></div>`;let c=[`<span>${S.source}</span>`,'<i>→</i>',`<span>${dl[S.dest]}</span>`];if(m.apps!==null)c.push('<i>→</i>',`<span>${num(m.apps)} заявок</span>`);if(m.sales!==null)c.push('<i>→</i>',`<span>${num(m.sales)} продаж</span>`);$('chain').innerHTML=c.join('');$('diagTitle').textContent=S.r.dt;$('diagText').textContent=S.r.dx;$('resultClose').innerHTML=m.req!==null?`Если ничего внутри пути не менять, для цели <b>${money(S.target)}</b> тебе понадобится примерно <b>${num(m.req)}</b> первых целевых действий в месяц. И вот здесь видно, нужно ли тебе реально больше аудитории или деньги уже теряются внутри существующей системы.`:`Для твоей цели нужно <b>${n} продаж</b>. Но часть пути сейчас не измеряется. Поэтому вопрос не в том, чтобы срочно делать еще больше контента. Сначала нужно увидеть, как именно человек доходит до покупки.`;show('result')}
-$('start').onclick=()=>show('role',1);choose('roles','role',()=>show('contacts',2));$('contactsNext').onclick=()=>{clear('eContacts');let n=$('name').value.trim(),t=$('tg').value.trim(),e=$('email').value.trim();if(!n||!t||!e||!$('consent').checked)return err('eContacts','Заполни имя, Telegram, email и отметь согласие.');if(!/^@[A-Za-z0-9_]{5,32}$/.test(t))return err('eContacts','Telegram укажи через @username.');if(!/^\S+@\S+\.\S+$/.test(e))return err('eContacts','Проверь email. Кажется, в нем ошибка.');Object.assign(S,{name:n,tg:t,email:e});show('goal',3)};$('goalNext').onclick=()=>{clear('eGoal');let t=+$('target').value,p=+$('price').value,pr=$('product').value;if(!(t>0)||!(p>0)||!pr)return err('eGoal','Укажи желаемый доход, средний чек и что ты продаешь.');Object.assign(S,{target:t,price:p,product:pr});show('source',4)};choose('sources','source',()=>show('dest',5));choose('dests','dest',()=>{renderFields();show('numbers',6)});$('calc').onclick=()=>{clear('eNumbers');let s=val('sales'),a=val('apps'),f1=val('first');if(f1!==null&&a!==null&&a>f1)return err('eNumbers','Проверь цифры. Заявок не может быть больше, чем людей на предыдущем шаге.');if(a!==null&&s!==null&&s>a)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем заявок.');if(a===null&&f1!==null&&s!==null&&s>f1)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем людей на предыдущем шаге.');calculate()};$('openSaved').onclick=()=>{let x=JSON.parse(localStorage.getItem(KEY)||'null');if(x){Object.assign(S,x);renderResult()}else show('hero')};if(new URLSearchParams(location.search).get('reset')==='1'){localStorage.removeItem(KEY);history.replaceState(null,'',location.pathname)}fetch('assets/galina.b64').then(r=>r.text()).then(x=>$('profilePhoto').src='data:image/webp;base64,'+x.trim()).catch(()=>{});localStorage.getItem(KEY)?show('return'):show('hero');
-</script></body></html>
+$('start').onclick=()=>show('role',1);
+choose('roles','role',()=>show('contacts',2));
+$('contactsNext').onclick=()=>{clearErr('eContacts');let n=$('name').value.trim(),t=$('tg').value.trim(),e=$('email').value.trim();if(!n||!t||!e||!$('consentData').checked)return err('eContacts','Заполни имя, Telegram, email и отметь обязательное согласие на обработку данных.');if(!/^@[A-Za-z0-9_]{5,32}$/.test(t))return err('eContacts','Telegram укажи через @username.');if(!/^\S+@\S+\.\S+$/.test(e))return err('eContacts','Проверь email. Кажется, в нем ошибка.');Object.assign(S,{name:n,tg:t,email:e,consentMarketing:$('consentMarketing').checked});show('goal',3)};
+$('goalNext').onclick=()=>{clearErr('eGoal');let t=+$('target').value,p=+$('price').value,pr=$('product').value;if(!(t>0)||!(p>0)||!pr)return err('eGoal','Укажи желаемый доход, средний чек и что ты продаешь.');Object.assign(S,{target:t,price:p,product:pr});show('platforms',4)};
+document.querySelectorAll('#platformChoices [data-v]').forEach(b=>b.onclick=()=>{const v=b.dataset.v;const idx=S.platforms.indexOf(v);if(idx>=0)S.platforms.splice(idx,1);else S.platforms.push(v);b.classList.toggle('selected',S.platforms.includes(v));$('platformHint').textContent=S.platforms.length?`Выбрано: ${S.platforms.join(', ')}`:'Выбери хотя бы один вариант.'});
+$('platformsNext').onclick=()=>{if(!S.platforms.length){$('platformHint').textContent='Сначала выбери хотя бы одну площадку.';return}renderSources();show('source',5)};
+choose('dests','dest',()=>{renderFields();show('numbers',7)});
+$('calc').onclick=()=>{clearErr('eNumbers');let s=val('sales'),a=val('apps'),f1=val('first');if(f1!==null&&a!==null&&a>f1)return err('eNumbers','Проверь цифры. Заявок не может быть больше, чем людей на предыдущем шаге.');if(a!==null&&s!==null&&s>a)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем заявок.');if(a===null&&f1!==null&&s!==null&&s>f1)return err('eNumbers','Проверь цифры. Продаж не может быть больше, чем людей на предыдущем шаге.');calculate()};
+$('openSaved').onclick=()=>{let x=JSON.parse(localStorage.getItem(KEY)||'null');if(x){Object.assign(S,x);renderResult()}else show('hero')};
+$('casePrev').onclick=()=>$('casesTrack').scrollBy({left:-Math.max(280,$('casesTrack').clientWidth*.85),behavior:'smooth'});
+$('caseNext').onclick=()=>$('casesTrack').scrollBy({left:Math.max(280,$('casesTrack').clientWidth*.85),behavior:'smooth'});
+if(new URLSearchParams(location.search).get('reset')==='1'){localStorage.removeItem(KEY);history.replaceState(null,'',location.pathname)}
+fetch('assets/galina.b64').then(r=>r.text()).then(x=>$('profilePhoto').src='data:image/webp;base64,'+x.trim()).catch(()=>{});
+localStorage.getItem(KEY)?show('return'):show('hero');
+</script>
+</body>
+</html>
